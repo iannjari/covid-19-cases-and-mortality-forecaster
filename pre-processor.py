@@ -36,6 +36,21 @@ casemapdata = df5.rename(columns={df5.columns[1]: 'Total Cases'})
 # Save data for case map
 casemapdata.to_excel ("casemapdata.xlsx", index = False, header=True)
 
+# Prepare deaths data for the map
+
+df6=deaths.drop('Province/State',axis=1)
+df6["Country/Region"].nunique(dropna = True)
+df6=df6.drop(['Lat','Long'],axis=1)
+cols2=df6[df6.columns[1:-1]]
+df7=df6.drop(cols2,axis=1)
+#df7 will be the new sliced dataframe 
+
+df8=pd.merge(df7,df4,how='inner',left_on=['Country/Region'],right_on=['COUNTRY'])
+df8=df8.drop('COUNTRY',axis=1)
+deathmapdata = df8.rename(columns={df8.columns[1]: 'Total Deaths'})
+deathmapdata.to_excel ("deathmapdata.xlsx", index = False, header=True)
+
+
 
 
 
