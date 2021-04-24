@@ -7,6 +7,9 @@ Created on Sat Apr 24 18:17:27 2021
 
 import pandas as pd
 import os
+import plotly.express as px
+#import plotly.graph_objects as go
+
 cases= pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv')
 deaths= pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv')
 
@@ -49,6 +52,40 @@ df8=pd.merge(df7,df4,how='inner',left_on=['Country/Region'],right_on=['COUNTRY']
 df8=df8.drop('COUNTRY',axis=1)
 deathmapdata = df8.rename(columns={df8.columns[1]: 'Total Deaths'})
 deathmapdata.to_excel ("deathmapdata.xlsx", index = False, header=True)
+
+# Prepare Line Graph data
+
+# Transpose the data and re-allocate the column headers
+df1=df1.transpose()
+new_header = df1.iloc[0] #grab the first row for the header
+df1 = df1[1:] #take the data less the header row
+df1.columns = new_header #set the header row as the df header
+
+df1=df1.reset_index()
+
+df2=df1.rename(columns = {'index':'Date'})
+
+# Convert datatypes into dates and integers
+df2[df2.columns[1:]]=df2[df2.columns[1:]].astype('int64')
+df2[df2.columns[1:]]
+
+date_convert=df2[df2.columns[0]]
+date_converted= pd.to_datetime(date_convert)
+
+df2['Date']=date_converted
+
+plot_df=df2.rename_axis(None, axis=1)
+
+# Test plot
+fig = px.line(plot_df, x="Date", y=df2['Kenya'],
+              hover_data={"Date"},
+              title='Cases',
+              labels={"y": "No. of Cases"}
+             )
+fig.show()
+
+
+
 
 
 
