@@ -78,13 +78,6 @@ plot_df=df2.rename_axis(None, axis=1)
 plot_df.to_excel ("cases_plot.xlsx", index = False, header=True)
 
 
-# Test plot
-fig = px.line(plot_df, x="Date", y=df2['Kenya'],
-              hover_data={"Date"},
-              title='Cases',
-              labels={"y": "No. of Cases"}
-             )
-fig.show()
 
 
 
