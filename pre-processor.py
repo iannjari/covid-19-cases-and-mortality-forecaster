@@ -75,6 +75,8 @@ date_converted= pd.to_datetime(date_convert)
 df2['Date']=date_converted
 
 plot_df=df2.rename_axis(None, axis=1)
+plot_df.to_excel ("cases_plot.xlsx", index = False, header=True)
+
 
 # Test plot
 fig = px.line(plot_df, x="Date", y=df2['Kenya'],
