@@ -12,6 +12,9 @@ pwd=os.getcwd()
 df1=pd.read_excel(pwd+"\\cases.xlsx")
 df2=pd.read_excel(pwd+"\\cases_plot.xlsx")
 
+df1=pd.read_excel(pwd+"\\cases.xlsx")
+df2=pd.read_excel(pwd+"\\cases_plot.xlsx")
+
 app = dash.Dash(__name__)
 fig = go.Figure()
 
@@ -41,7 +44,7 @@ def display_graph(dropdown):
     
     fig = px.line(df2,x=df2["Date"], y=dffd.loc[0],
                   hover_data={"Date"},
-                  title='Cases',
+                  title='Cases By Country',
                   labels={"y": "No. of Cases"}
                   )
     return fig

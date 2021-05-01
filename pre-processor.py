@@ -53,7 +53,7 @@ df8=df8.drop('COUNTRY',axis=1)
 deathmapdata = df8.rename(columns={df8.columns[1]: 'Total Deaths'})
 deathmapdata.to_excel ("deathmapdata.xlsx", index = False, header=True)
 
-# Prepare Line Graph data
+# Prepare Line Graph cases data
 
 # Transpose the data and re-allocate the column headers
 df1=df1.transpose()
@@ -76,6 +76,8 @@ df2['Date']=date_converted
 
 plot_df=df2.rename_axis(None, axis=1)
 plot_df.to_excel ("cases_plot.xlsx", index = False, header=True)
+
+# Prepare Line Graph deaths data
 
 
 
