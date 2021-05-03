@@ -4,11 +4,11 @@ Created on Sat Apr 24 18:17:27 2021
 
 @author: iannjari
 """
-
+# import dependencies
 import pandas as pd
 import os
-import plotly.express as px
-#import plotly.graph_objects as go
+
+# fetch data
 
 cases= pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv')
 deaths= pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv')
@@ -22,6 +22,9 @@ df1=df1.groupby(['Country/Region'],as_index=False).sum()
 
 # Drop un-wanted columns
 df1=df1.drop(['Lat','Long'],axis=1)
+
+# Store this dataframe for later use
+df1.to_excel ("cases.xlsx", index = False, header=True)
 cols=df1[df1.columns[1:-1]]
 df2=df1.drop(cols,axis=1)
 
@@ -42,7 +45,7 @@ casemapdata.to_excel ("casemapdata.xlsx", index = False, header=True)
 # Prepare deaths data for the map
 
 df6=deaths.drop('Province/State',axis=1)
-df6["Country/Region"].nunique(dropna = True)
+df6=df6.groupby(['Country/Region'],as_index=False).sum()
 df6=df6.drop(['Lat','Long'],axis=1)
 cols2=df6[df6.columns[1:-1]]
 df7=df6.drop(cols2,axis=1)
