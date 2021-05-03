@@ -12,8 +12,8 @@ pwd=os.getcwd()
 df1=pd.read_excel(pwd+"\\cases.xlsx")
 df2=pd.read_excel(pwd+"\\cases_plot.xlsx")
 
-df1=pd.read_excel(pwd+"\\cases.xlsx")
-df2=pd.read_excel(pwd+"\\cases_plot.xlsx")
+df6=pd.read_excel(pwd+"\\deaths.xlsx")
+df7=pd.read_excel(pwd+"\\deaths_plot.xlsx")
 
 app = dash.Dash(__name__)
 fig = go.Figure()
@@ -26,7 +26,16 @@ app.layout = html.Div([
     
     dcc.Graph(id='graph'),
     
-    html.Div(id='dd-output-container')
+    html.Div(id='dd-output-container'),
+    
+    dcc.Dropdown(
+        id='dropdown2',
+        value = 'Afghanistan',
+        options=[{'label': i, 'value': i} for i in df7.columns[1:]]),
+    
+    dcc.Graph(id='graph2'),
+    
+    html.Div(id='dd-output-container2')
 ])
 
 @app.callback(
