@@ -17,6 +17,7 @@ df7=pd.read_excel(pwd+"\\deaths_plot.xlsx")
 
 app = dash.Dash(__name__)
 fig = go.Figure()
+fig2=go.Figure()
 
 app.layout = html.Div([
     dcc.Dropdown(
@@ -25,8 +26,7 @@ app.layout = html.Div([
         options=[{'label': i, 'value': i} for i in df2.columns[1:]]),
     
     dcc.Graph(id='graph'),
-    
-    html.Div(id='dd-output-container'),
+     html.Div(id='dd-output-container1'),
     
     dcc.Dropdown(
         id='dropdown2',
@@ -35,15 +35,20 @@ app.layout = html.Div([
     
     dcc.Graph(id='graph2'),
     
-    html.Div(id='dd-output-container2')
+    html.Div(id='dd-output-container')
+    
+    
 ])
 
 @app.callback(
-    Output("graph", "figure"), 
-    [Input('dropdown', 'value')])
+    Output("graph", "figure"),
+    Output("graph2","figure"),
+    [Input('dropdown', 'value'),
+     Input('dropdown2', 'value')
+     ])
 
 
-def display_graph(dropdown):
+def display_graph(dropdown,dropdown2):
     
     dffd=df1.loc[df1['Country/Region'] == dropdown]
     dffd=dffd.reset_index()
@@ -56,10 +61,21 @@ def display_graph(dropdown):
                   title='Cases By Country',
                   labels={"y": "No. of Cases"}
                   )
-    return fig
-
- 
-
     
+    dff=df6.loc[df6['Country/Region'] == dropdown2]
+    dff=dff.reset_index()
+    dff=dff.rename_axis(None, axis=1)
+    dff=dff.drop(['index','Country/Region'],axis=1)
+    
+    
+    fig2 = px.line(df7,x=df7["Date"], y=dff.loc[0],
+                  hover_data={"Date"},
+                  title='Deaths By Country',
+                  labels={"y": "No. of Deaths"}
+                  )
+    
+    return fig,fig2
+
+
     
 app.run_server(debug=True) 
