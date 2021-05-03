@@ -89,7 +89,7 @@ plot_df.to_excel ("cases_plot.xlsx", index = False, header=True)
 # Prepare Line Graph deaths data
 
 # Transpose the data and re-allocate the column headers
-df1=df6.transpose()
+df6=df6.transpose()
 new_header = df6.iloc[0] #grab the first row for the header
 df6 = df6[1:] #take the data less the header row
 df6.columns = new_header #set the header row as the df header
