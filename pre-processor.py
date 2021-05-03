@@ -82,7 +82,27 @@ plot_df.to_excel ("cases_plot.xlsx", index = False, header=True)
 
 # Prepare Line Graph deaths data
 
+# Transpose the data and re-allocate the column headers
+df1=df6.transpose()
+new_header = df6.iloc[0] #grab the first row for the header
+df6 = df6[1:] #take the data less the header row
+df6.columns = new_header #set the header row as the df header
 
+df6=df6.reset_index()
+
+df7=df6.rename(columns = {'index':'Date'})
+
+# Convert datatypes into dates and integers
+df7[df7.columns[1:]]=df7[df7.columns[1:]].astype('int64')
+df7[df7.columns[1:]]
+
+date_convert=df7[df7.columns[0]]
+date_converted= pd.to_datetime(date_convert)
+
+df7['Date']=date_converted
+
+plot_df=df7.rename_axis(None, axis=1)
+plot_df.to_excel ("deaths_plot.xlsx", index = False, header=True)
 
 
 
