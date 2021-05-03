@@ -50,6 +50,9 @@ casemapdata.to_excel ("casemapdata.xlsx", index = False, header=True)
 df6=deaths.drop('Province/State',axis=1)
 df6=df6.groupby(['Country/Region'],as_index=False).sum()
 df6=df6.drop(['Lat','Long'],axis=1)
+
+df6.to_excel ("cases.xlsx", index = False, header=True)
+
 cols2=df6[df6.columns[1:-1]]
 df7=df6.drop(cols2,axis=1)
 #df7 will be the new sliced dataframe 
