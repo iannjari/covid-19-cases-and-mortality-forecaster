@@ -25,6 +25,9 @@ df1=df1.drop(['Lat','Long'],axis=1)
 
 # Store this dataframe for later use
 df1.to_excel ("cases.xlsx", index = False, header=True)
+
+# Drop all data except last day
+
 cols=df1[df1.columns[1:-1]]
 df2=df1.drop(cols,axis=1)
 
