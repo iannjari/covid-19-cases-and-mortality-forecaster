@@ -25,7 +25,7 @@ app.layout = html.Div([
         value = 'Afghanistan',
         options=[{'label': i, 'value': i} for i in df2.columns[1:]]),
     
-    dcc.Graph(id='graph',figure=fig),
+    dcc.Graph(id='graph'),
      html.Div(id='dd-output-container1'),
     
     dcc.Dropdown(
@@ -33,7 +33,7 @@ app.layout = html.Div([
         value = 'Afghanistan',
         options=[{'label': i, 'value': i} for i in df7.columns[1:]]),
     
-    dcc.Graph(id='graph2',figure=fig2),
+    dcc.Graph(id='graph2'),
     
     html.Div(id='dd-output-container')
     
@@ -41,8 +41,7 @@ app.layout = html.Div([
 ])
 
 @app.callback(
-    Output("graph", "figure"),
-    Output("graph2","figure"),
+    [Output("graph", "figure"),Output("graph2","figure"),],
     [Input('dropdown', 'value'),
      Input('dropdown2', 'value')
      ])
@@ -75,6 +74,7 @@ def display_graph(dropdown,dropdown2):
                   )
     
     return fig,fig2
+
 
 
     
