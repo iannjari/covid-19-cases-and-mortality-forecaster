@@ -45,9 +45,13 @@ app.layout = html.Div([
 ])
 
 index_page = html.Div([
-    dcc.Link('Go to Page 1', href='/page-1'),
+    dcc.Link('Home', href='/page-1'),
     html.Br(),
-    dcc.Link('Go to Page 2', href='/page-2'),
+    dcc.Link('Cases and Deaths Board', href='/page-2'),
+    html.Br(),
+    dcc.Link('Generate Report', href='/page-1'),
+    html.Br(),
+    dcc.Link('Predict', href='/page-2')
 ])
 
 page_1_layout = html.Div([
