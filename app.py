@@ -25,6 +25,7 @@ df7=pd.read_excel(pwd+"\\deaths_plot.xlsx")
 app = dash.Dash(__name__)
 fig = go.Figure()
 fig2=go.Figure()
+fig3=go.Figure()
 
 app.layout = html.Div([
     
@@ -39,7 +40,16 @@ index_page = html.Div([
     html.Br(),
     dcc.Link('Generate Report', href='/page-2'),
     html.Br(),
-    dcc.Link('Predict', href='/page-3')
+    dcc.Link('Predict', href='/page-3'),
+    
+    html.Br(),
+    html.Br(),
+    
+    dcc.Graph(id="choropleth", figure=fig3),
+    
+    html.Br(),
+    
+    
 ])
 
 page_1_layout = html.Div([
@@ -105,7 +115,7 @@ def display_page(pathname):
     # You could also return a 404 "URL not found" page here
 
 @app.callback(
-    [Output("graph", "figure"),Output("graph2","figure"),],
+    [Output("choropleth", "figure"),Output("graph", "figure"),Output("graph2","figure")],
     [Input('dropdown', 'value'),
      Input('dropdown2', 'value')
      ])
@@ -139,6 +149,14 @@ def display_graph(dropdown,dropdown2):
                   labels={"y": "No. of Deaths"}
                   )
     
+    return fig,fig2
+
+@app.callback(
+    [Output("choropleth", "figure")],
+    [Input('dropdown3', 'value'),
+     ])
+
+def display_map(dropdown3):
     fig3 = go.Figure(data=go.Choropleth(
     locations = case_map['CODE'],
     z = case_map['Total Cases'],
@@ -167,13 +185,13 @@ def display_graph(dropdown,dropdown2):
                 JHU CSSE COVID-19 Data</a>',
             showarrow = False
         )]
-    )
+            )
+        
+    return fig3
     
     
-    
-    return fig,fig2,fig3
 
 
-
     
-app.run_server(debug=True) 
+app.run_server(debug=True)
+
