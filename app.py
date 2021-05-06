@@ -24,6 +24,32 @@ app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div(id='page-content'),
     
+    
+    
+    
+])
+
+index_page = html.Div([
+    #dcc.Link('Home', href='/page-1'),
+    html.Br(),
+    dcc.Link('Cases and Deaths Board', href='/page-1'),
+    html.Br(),
+    dcc.Link('Generate Report', href='/page-2'),
+    html.Br(),
+    dcc.Link('Predict', href='/page-3')
+])
+
+page_1_layout = html.Div([
+    html.H1('Cases and Deaths by Country'),
+    html.Br(),
+    
+    dcc.Link('Home', href='/index_page'),
+    html.Br(),
+    dcc.Link('Cases and Deaths By Country', href='/page-1'),
+    html.Br(),
+    dcc.Link('Generate Report', href='/page-2'),
+    html.Br(),
+    dcc.Link('Predict', href='/page-3'),
     dcc.Dropdown(
         id='dropdown',
         value = 'Afghanistan',
@@ -40,47 +66,14 @@ app.layout = html.Div([
     dcc.Graph(id='graph2'),
     
     html.Div(id='dd-output-container')
-    
-    
 ])
 
-index_page = html.Div([
-    dcc.Link('Home', href='/page-1'),
-    html.Br(),
-    dcc.Link('Cases and Deaths Board', href='/page-2'),
-    html.Br(),
-    dcc.Link('Generate Report', href='/page-1'),
-    html.Br(),
-    dcc.Link('Predict', href='/page-2')
-])
 
-page_1_layout = html.Div([
-    html.H1('Page 1'),
-    dcc.Dropdown(
-        id='page-1-dropdown',
-        options=[{'label': i, 'value': i} for i in ['LA', 'NYC', 'MTL']],
-        value='LA'
-    ),
-    html.Div(id='page-1-content'),
-    html.Br(),
-    dcc.Link('Go to Page 2', href='/page-2'),
-    html.Br(),
-    dcc.Link('Go back to home', href='/'),
-])
-
-@app.callback(dash.dependencies.Output('page-1-content', 'children'),
-              [dash.dependencies.Input('page-1-dropdown', 'value')])
-def page_1_dropdown(value):
-    return 'You have selected "{}"'.format(value)
 
 
 page_2_layout = html.Div([
-    html.H1('Page 2'),
-    dcc.RadioItems(
-        id='page-2-radios',
-        options=[{'label': i, 'value': i} for i in ['Orange', 'Blue', 'Red']],
-        value='Orange'
-    ),
+    html.H1('Reports'),
+    html.Br(),
     html.Div(id='page-2-content'),
     html.Br(),
     dcc.Link('Go to Page 1', href='/page-1'),
