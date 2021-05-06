@@ -43,6 +43,12 @@ index_page = html.Div([
     dcc.Link('Predict', href='/page-3'),
     
     html.Br(),
+    
+     dcc.Dropdown(
+        id='dropdown3',
+        value = 'Cases',
+        options=['Cases','Deaths']),
+     
     html.Br(),
     
     dcc.Graph(id="choropleth", figure=fig3),
@@ -157,35 +163,67 @@ def display_graph(dropdown,dropdown2):
      ])
 
 def display_map(dropdown3):
-    fig3 = go.Figure(data=go.Choropleth(
-    locations = case_map['CODE'],
-    z = case_map['Total Cases'],
-    text = case_map['Country/Region'],
-    colorscale = 'Blues',
-    autocolorscale=False,
-    reversescale=True,
-    marker_line_color='darkgray',
-    marker_line_width=0.5,
-    colorbar_title = 'Total Cases',
-    ))
+    
+    if dropdown3=='Cases':
+        fig3 = go.Figure(data=go.Choropleth(
+            locations = case_map['CODE'],
+            z = case_map['Total Cases'],
+            text = case_map['Country/Region'],
+            colorscale = 'Blues',
+            autocolorscale=False,
+            reversescale=True,
+            marker_line_color='darkgray',
+            marker_line_width=0.5,
+            colorbar_title = 'Total Cases',
+            ))
 
-    fig3.update_layout(
-        title_text='Cumulative Cases per Country',
-        geo=dict(
-            showframe=False,
-            showcoastlines=False,
-            projection_type='equirectangular'
-        ),
-        annotations = [dict(
-            x=0.55,
-            y=0.1,
-            xref='paper',
-            yref='paper',
-            text='Source: <a href="https://github.com/CSSEGISandData/COVID-19">\
-                JHU CSSE COVID-19 Data</a>',
-            showarrow = False
-        )]
-            )
+        fig3.update_layout(
+            title_text='Cumulative Cases per Country',
+            geo=dict(
+                showframe=False,
+                showcoastlines=False,
+                projection_type='equirectangular'
+            ),
+            annotations = [dict(
+                x=0.55,
+                y=0.1,
+                xref='paper',
+                yref='paper',
+                text='Source: <a href="https://github.com/CSSEGISandData/COVID-19">\
+                    JHU CSSE COVID-19 Data</a>',
+                showarrow = False
+                    )]
+                )
+    else:
+            fig3 = go.Figure(data=go.Choropleth(
+                locations = case_map['CODE'],
+                z = case_map['Total Cases'],
+                text = case_map['Country/Region'],
+                colorscale = 'Blues',
+                autocolorscale=False,
+                reversescale=True,
+                marker_line_color='darkgray',
+                marker_line_width=0.5,
+                colorbar_title = 'Total Cases',
+                    ))
+
+            fig3.update_layout(
+                title_text='Cumulative Cases per Country',
+                geo=dict(
+                    showframe=False,
+                    showcoastlines=False,
+                    projection_type='equirectangular'
+                ),
+                annotations = [dict(
+                    x=0.55,
+                    y=0.1,
+                    xref='paper',
+                    yref='paper',
+                    text='Source: <a href="https://github.com/CSSEGISandData/COVID-19">\
+                        JHU CSSE COVID-19 Data</a>',
+                    showarrow = False
+                    )]
+                    )
         
     return fig3
     
