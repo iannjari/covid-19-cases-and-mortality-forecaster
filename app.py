@@ -113,31 +113,65 @@ def display_page(pathname):
 
 def display_graph(dropdown,dropdown2):
     
+    # Prepare cases graphing data
     dffd=df1.loc[df1['Country/Region'] == dropdown]
     dffd=dffd.reset_index()
     dffd=dffd.rename_axis(None, axis=1)
     dffd=dffd.drop(['index','Country/Region'],axis=1)
     
-    
+    # Plot cases graph
     fig = px.line(df2,x=df2["Date"], y=dffd.loc[0],
                   hover_data={"Date"},
                   title='Cases By Country',
                   labels={"y": "No. of Cases"}
                   )
     
+    # Prepare deaths graphing data
     dff=df6.loc[df6['Country/Region'] == dropdown2]
     dff=dff.reset_index()
     dff=dff.rename_axis(None, axis=1)
     dff=dff.drop(['index','Country/Region'],axis=1)
     
-    
+    # Plot deaths graph
     fig2 = px.line(df7,x=df7["Date"], y=dff.loc[0],
                   hover_data={"Date"},
                   title='Deaths By Country',
                   labels={"y": "No. of Deaths"}
                   )
     
-    return fig,fig2
+    fig3 = go.Figure(data=go.Choropleth(
+    locations = case_map['CODE'],
+    z = case_map['Total Cases'],
+    text = case_map['Country/Region'],
+    colorscale = 'Blues',
+    autocolorscale=False,
+    reversescale=True,
+    marker_line_color='darkgray',
+    marker_line_width=0.5,
+    colorbar_title = 'Total Cases',
+    ))
+
+    fig3.update_layout(
+        title_text='Cumulative Cases per Country',
+        geo=dict(
+            showframe=False,
+            showcoastlines=False,
+            projection_type='equirectangular'
+        ),
+        annotations = [dict(
+            x=0.55,
+            y=0.1,
+            xref='paper',
+            yref='paper',
+            text='Source: <a href="https://github.com/CSSEGISandData/COVID-19">\
+                JHU CSSE COVID-19 Data</a>',
+            showarrow = False
+        )]
+    )
+    
+    
+    
+    return fig,fig2,fig3
 
 
 
