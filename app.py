@@ -23,16 +23,12 @@ app.layout = html.Div([
     
     dcc.Location(id='url', refresh=False),
     html.Div(id='page-content'),
-    
-    
-    
-    
-])
+    ])
 
 index_page = html.Div([
     #dcc.Link('Home', href='/page-1'),
     html.Br(),
-    dcc.Link('Cases and Deaths Board', href='/page-1'),
+    dcc.Link('Cases and Deaths By Country', href='/page-1'),
     html.Br(),
     dcc.Link('Generate Report', href='/page-2'),
     html.Br(),
@@ -45,11 +41,13 @@ page_1_layout = html.Div([
     
     dcc.Link('Home', href='/index_page'),
     html.Br(),
-    dcc.Link('Cases and Deaths By Country', href='/page-1'),
-    html.Br(),
     dcc.Link('Generate Report', href='/page-2'),
     html.Br(),
     dcc.Link('Predict', href='/page-3'),
+    
+    html.Br(),
+    html.Br(),
+    
     dcc.Dropdown(
         id='dropdown',
         value = 'Afghanistan',
@@ -76,15 +74,15 @@ page_2_layout = html.Div([
     html.Br(),
     html.Div(id='page-2-content'),
     html.Br(),
-    dcc.Link('Go to Page 1', href='/page-1'),
+    dcc.Link('Home', href='/'),
     html.Br(),
-    dcc.Link('Go back to home', href='/')
+    dcc.Link('Cases and Deaths By Country', href='/page-1'),
+    html.Br(),
+    dcc.Link('Predict', href='/page-3')
+    
 ])
 
-@app.callback(dash.dependencies.Output('page-2-content', 'children'),
-              [dash.dependencies.Input('page-2-radios', 'value')])
-def page_2_radios(value):
-    return 'You have selected "{}"'.format(value)
+
 
 
 # Update the index
