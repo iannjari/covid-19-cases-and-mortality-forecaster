@@ -47,7 +47,9 @@ index_page = html.Div([
      dcc.Dropdown(
         id='dropdown3',
         value = 'Cases',
-        options=['Cases','Deaths']),
+        options=[
+            {'label': 'See Global Cases', 'value': 'Cases'},
+            {'label': 'See Global Mortality', 'value': 'Deaths'}]),
      
     html.Br(),
     
@@ -121,7 +123,7 @@ def display_page(pathname):
     # You could also return a 404 "URL not found" page here
 
 @app.callback(
-    [Output("choropleth", "figure"),Output("graph", "figure"),Output("graph2","figure")],
+    [Output("graph", "figure"),Output("graph2","figure")],
     [Input('dropdown', 'value'),
      Input('dropdown2', 'value')
      ])
@@ -158,7 +160,7 @@ def display_graph(dropdown,dropdown2):
     return fig,fig2
 
 @app.callback(
-    [Output("choropleth", "figure")],
+    Output("choropleth", "figure"),
     [Input('dropdown3', 'value'),
      ])
 
