@@ -198,19 +198,19 @@ def display_map(dropdown3):
                 )
     else:
             fig3 = go.Figure(data=go.Choropleth(
-                locations = case_map['CODE'],
-                z = case_map['Total Cases'],
-                text = case_map['Country/Region'],
-                colorscale = 'Blues',
+                locations = death_map['CODE'],
+                z = death_map['Total Deaths'],
+                text = death_map['Country/Region'],
+                colorscale = 'Reds',
                 autocolorscale=False,
-                reversescale=True,
+                reversescale=False,
                 marker_line_color='darkgray',
                 marker_line_width=0.5,
                 colorbar_title = 'Total Cases',
                     ))
 
             fig3.update_layout(
-                title_text='Cumulative Cases per Country',
+                title_text='Cumulative Deaths per Country',
                 geo=dict(
                     showframe=False,
                     showcoastlines=False,
