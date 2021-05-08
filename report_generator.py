@@ -20,8 +20,46 @@ death_map =pd.read_excel(pwd+"\\deathmapdata.xlsx")
 global_plot_data_cases=pd.read_excel(pwd+"\\cases_plot.xlsx")
 global_plot_data_deaths=pd.read_excel(pwd+"\\deaths_plot.xlsx")
 
-trend_c=global_plot_data_cases[['Date','Global Cases']]
-trend_d=global_plot_data_deaths[['Date','Global Deaths']]
+# Create data for plotting last 7 days cases globally
+trend_c=global_plot_data_cases[['Date','Global Cases']].tail(15)
+trend_c=trend_c.reset_index()
+trend_c=trend_c.drop(columns=['index'])
+base_no=trend_c.iloc[0]['Global Cases']
+
+y=trend_c['Global Cases']
+
+n=[]
+c=base_no
+d=base_no
+for i in y:
+    c=i-d
+    d=i
+    n.append(c)
+
+list_dataframe = pd.DataFrame(n)
+trend_c['Global Cases']=list_dataframe
+trend_c=trend_c.tail(14)
+
+
+
+trend_d=global_plot_data_deaths[['Date','Global Deaths']].tail(15)
+trend_d=trend_d.reset_index()
+trend_d=trend_d.drop(columns=['index'])
+base_no=trend_d.iloc[0]['Global Deaths']
+
+w=trend_d['Global Deaths']
+
+m=[]
+s=base_no
+b=base_no
+for i in w:
+    s=i-b
+    b=i
+    m.append(s)
+
+list_dataframe1 = pd.DataFrame(m)
+trend_d['Global Deaths']=list_dataframe1
+trend_d=trend_d.tail(14)
 
 fig1=go.Figure()
 fig2=go.Figure()
@@ -92,7 +130,7 @@ def create_figures():
                   
                   title='Global Cases Trend',
                   labels={"y": "No. of Cases"}
-                  )
+                  ) 
     
     fig4 = px.line(trend_d,x=trend_d["Date"], y=trend_d['Global Deaths'],
                   
