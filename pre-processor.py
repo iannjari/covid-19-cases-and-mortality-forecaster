@@ -76,14 +76,19 @@ df2=df1.rename(columns = {'index':'Date'})
 
 # Convert datatypes into dates and integers
 df2[df2.columns[1:]]=df2[df2.columns[1:]].astype('int64')
-df2[df2.columns[1:]]
+#df2[df2.columns[1:]]
 
 date_convert=df2[df2.columns[0]]
 date_converted= pd.to_datetime(date_convert)
 
 df2['Date']=date_converted
 
+
+x=df2[df2.columns[1:]]
+df2['Global Cases']=x.sum(axis = 1, skipna = True)
+
 plot_df=df2.rename_axis(None, axis=1)
+
 plot_df.to_excel ("cases_plot.xlsx", index = False, header=True)
 
 # Prepare Line Graph deaths data
