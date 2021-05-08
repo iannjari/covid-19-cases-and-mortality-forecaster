@@ -83,7 +83,7 @@ date_converted= pd.to_datetime(date_convert)
 
 df2['Date']=date_converted
 
-
+# Add a global cases column to the data frame 
 x=df2[df2.columns[1:]]
 df2['Global Cases']=x.sum(axis = 1, skipna = True)
 
@@ -111,6 +111,10 @@ date_convert=df7[df7.columns[0]]
 date_converted= pd.to_datetime(date_convert)
 
 df7['Date']=date_converted
+
+# Add global deaths column by summing all countries
+y1=df7[df7.columns[1:]]
+df7['Global Deaths']=y1.sum(axis = 1, skipna = True)
 
 plot_df=df7.rename_axis(None, axis=1)
 plot_df.to_excel ("deaths_plot.xlsx", index = False, header=True)
