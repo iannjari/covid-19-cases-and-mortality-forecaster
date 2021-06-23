@@ -2,7 +2,7 @@
 This is a fourth year project which is partial fulfillment of requirements for a of a Bachelor’s 
 of Science (Computer Science) at Kenyatta University. 
 
-The objectives of the project hosted in this repository are to; 
+The objectives of the project hosted in this repository are; 
 + Analyze the state of tracking applications and availability of open-source code  for their implementation, 
 + Design an open-source solution which is easy to deploy and use, 
 + Create an interactive dashboard app tracking the number of cases, deaths, and  recoveries by country and region, 
