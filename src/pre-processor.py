@@ -8,6 +8,8 @@ Created on Sat Apr 24 18:17:27 2021
 import pandas as pd
 import os
 
+pwd= os.getcwd()
+
 # fetch data
 
 cases= pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv')
@@ -24,7 +26,7 @@ df1=df1.groupby(['Country/Region'],as_index=False).sum()
 df1=df1.drop(['Lat','Long'],axis=1)
 
 # Store this dataframe for later use
-df1.to_excel ("cases.xlsx", index = False, header=True)
+df1.to_excel (pwd+"\\..\\data\\cases.xlsx", index = False, header=True)
 
 # Drop all data except last day
 
@@ -33,7 +35,7 @@ df2=df1.drop(cols,axis=1)
 
 # Read COUNTRY CODE data
 pwd=os.getcwd()
-df4=pd.read_excel(pwd+"\\map_code1.xlsx")
+df4=pd.read_excel(pwd+"\\..\\data\\map_code1.xlsx")
 
 # Perform inner join on the map code and cases(df2)
 df5=pd.merge(df2,df4,how='inner',left_on=['Country/Region'],right_on=['COUNTRY'])
@@ -43,7 +45,7 @@ df5=df5.drop('COUNTRY',axis=1)
 casemapdata = df5.rename(columns={df5.columns[1]: 'Total Cases'})
 
 # Save data for case map
-casemapdata.to_excel ("casemapdata.xlsx", index = False, header=True)
+casemapdata.to_excel (pwd+"\\..\\data\\casemapdata.xlsx", index = False, header=True)
 
 # Prepare deaths data for the map
 
@@ -51,7 +53,7 @@ df6=deaths.drop('Province/State',axis=1)
 df6=df6.groupby(['Country/Region'],as_index=False).sum()
 df6=df6.drop(['Lat','Long'],axis=1)
 
-df6.to_excel ("deaths.xlsx", index = False, header=True)
+df6.to_excel (pwd+"\\..\\data\\deaths.xlsx", index = False, header=True)
 
 cols2=df6[df6.columns[1:-1]]
 df7=df6.drop(cols2,axis=1)
@@ -60,7 +62,7 @@ df7=df6.drop(cols2,axis=1)
 df8=pd.merge(df7,df4,how='inner',left_on=['Country/Region'],right_on=['COUNTRY'])
 df8=df8.drop('COUNTRY',axis=1)
 deathmapdata = df8.rename(columns={df8.columns[1]: 'Total Deaths'})
-deathmapdata.to_excel ("deathmapdata.xlsx", index = False, header=True)
+deathmapdata.to_excel (pwd+"\\..\\data\\deathmapdata.xlsx", index = False, header=True)
 
 # Prepare Line Graph cases data
 
@@ -89,7 +91,7 @@ df2['Global Cases']=x.sum(axis = 1, skipna = True)
 
 plot_df=df2.rename_axis(None, axis=1)
 
-plot_df.to_excel ("cases_plot.xlsx", index = False, header=True)
+plot_df.to_excel (pwd+"\\..\\data\\cases_plot.xlsx", index = False, header=True)
 
 # Prepare Line Graph deaths data
 
@@ -117,7 +119,7 @@ y1=df7[df7.columns[1:]]
 df7['Global Deaths']=y1.sum(axis = 1, skipna = True)
 
 plot_df=df7.rename_axis(None, axis=1)
-plot_df.to_excel ("deaths_plot.xlsx", index = False, header=True)
+plot_df.to_excel (pwd+"\\..\\data\\deaths_plot.xlsx", index = False, header=True)
 
 
 
