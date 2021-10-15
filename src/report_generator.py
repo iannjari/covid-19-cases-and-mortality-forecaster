@@ -13,12 +13,12 @@ import plotly.graph_objects as go
 pwd=os.getcwd()
 
 # Read data for maps
-case_map =pd.read_excel(pwd+"\\casemapdata.xlsx")
-death_map =pd.read_excel(pwd+"\\deathmapdata.xlsx")
+case_map =pd.read_excel(pwd+"\\..\\data\\casemapdata.xlsx")
+death_map =pd.read_excel(pwd+"\\..\\data\\deathmapdata.xlsx")
 
 # Read data for global trends
-global_plot_data_cases=pd.read_excel(pwd+"\\cases_plot.xlsx")
-global_plot_data_deaths=pd.read_excel(pwd+"\\deaths_plot.xlsx")
+global_plot_data_cases=pd.read_excel(pwd+"\\..\\data\\cases_plot.xlsx")
+global_plot_data_deaths=pd.read_excel(pwd+"\\..\\data\\deaths_plot.xlsx")
 
 # Create data for plotting last 7 days cases globally
 trend_c=global_plot_data_cases[['Date','Global Cases']].tail(15)
