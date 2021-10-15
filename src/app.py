@@ -11,16 +11,16 @@ import os
 pwd=os.getcwd()
 
 # Read data for maps
-case_map =pd.read_excel(pwd+"\\casemapdata.xlsx")
-death_map =pd.read_excel(pwd+"\\deathmapdata.xlsx")
+case_map =pd.read_excel(pwd+"\\..\\data\\casemapdata.xlsx")
+death_map =pd.read_excel(pwd+"\\..\\data\\deathmapdata.xlsx")
 
 
 # Read line plot data
-df1=pd.read_excel(pwd+"\\cases.xlsx")
-df2=pd.read_excel(pwd+"\\cases_plot.xlsx")
+df1=pd.read_excel(pwd+"\\..\\data\\cases.xlsx")
+df2=pd.read_excel(pwd+"\\..\\data\\cases_plot.xlsx")
 
-df6=pd.read_excel(pwd+"\\deaths.xlsx")
-df7=pd.read_excel(pwd+"\\deaths_plot.xlsx")
+df6=pd.read_excel(pwd+"\\..\\data\\deaths.xlsx")
+df7=pd.read_excel(pwd+"\\..\\data\\deaths_plot.xlsx")
 
 app = dash.Dash(__name__)
 fig = go.Figure()
