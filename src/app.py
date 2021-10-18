@@ -23,6 +23,7 @@ df6=pd.read_excel(pwd+"\\..\\data\\deaths.xlsx")
 df7=pd.read_excel(pwd+"\\..\\data\\deaths_plot.xlsx")
 
 app = dash.Dash(__name__)
+app.config.suppress_callback_exceptions = True
 fig = go.Figure()
 fig2=go.Figure()
 fig3=go.Figure()
