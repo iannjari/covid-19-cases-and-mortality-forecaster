@@ -10,6 +10,9 @@ import plotly.express as px
 import pandas as pd
 import plotly.graph_objects as go
 
+from fpdf import FPDF
+import matplotlib as plt
+
 pwd=os.getcwd()
 
 # Read data for maps
@@ -20,7 +23,7 @@ death_map =pd.read_excel(pwd+"\\..\\data\\deathmapdata.xlsx")
 global_plot_data_cases=pd.read_excel(pwd+"\\..\\data\\cases_plot.xlsx")
 global_plot_data_deaths=pd.read_excel(pwd+"\\..\\data\\deaths_plot.xlsx")
 
-# Create data for plotting last 7 days cases globally
+# Create data for plotting last 14 days cases globally
 trend_c=global_plot_data_cases[['Date','Global Cases']].tail(15)
 trend_c=trend_c.reset_index()
 trend_c=trend_c.drop(columns=['index'])
@@ -41,7 +44,7 @@ trend_c['Global Cases']=list_dataframe
 trend_c=trend_c.tail(14)
 
 
-
+# Create data for plotting last 7 days deaths globally
 trend_d=global_plot_data_deaths[['Date','Global Deaths']].tail(15)
 trend_d=trend_d.reset_index()
 trend_d=trend_d.drop(columns=['index'])
@@ -61,10 +64,7 @@ list_dataframe1 = pd.DataFrame(m)
 trend_d['Global Deaths']=list_dataframe1
 trend_d=trend_d.tail(14)
 
-fig1=go.Figure()
-fig2=go.Figure()
-
-def create_figures():
+def create_figures(trend_c,trend_d):
     fig1 = go.Figure(data=go.Choropleth(
             locations = case_map['CODE'],
             z = case_map['Total Cases'],
@@ -139,9 +139,27 @@ def create_figures():
                   )
     
         
-    return fig1,fig2,fig3,fig4
+    fig1.write_image("fig1.png")
+    fig2.write_image("fig2.png")
+    fig3.write_image("fig3.png")
+    fig4.write_image("fig4.png")
+
+
+create_figures(trend_c,trend_d)
 
 
 
+WIDTH = 210
+HEIGHT = 297
 
-    
+pdf = FPDF() # A4 (210 by 297 mm)
+
+pdf.add_page()
+pdf.image("fig1.png")
+pdf.image("fig2.png")
+
+pdf.add_page()
+pdf.image("fig3.png", 0, 0, WIDTH)
+pdf.image("fig4.png", 0, 0, WIDTH)
+
+pdf.output('testpdf.pdf', 'F')
