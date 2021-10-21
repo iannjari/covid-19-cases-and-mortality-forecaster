@@ -157,6 +157,36 @@ def regions_group(case_map,death_map):
 
     return grouped_deaths,grouped_cases
 
+# Create variables for report paragraphs
+def paragraph_vars():
+    pg2_cases=
+    pg2_deaths=
+
+    pg3_africa_case=
+    pg3_africa_death=
+    
+    pg3_europe_case=
+    pg3_europe_death=
+
+    pg3_asia_case=
+    pg3_asia_death=
+
+    pg3_na_case=
+    pg3_na_death=
+
+    pg3_sa_case=
+    pg3_sa_death=
+
+    pg3_au_case=
+    pg3_au_death=
+
+    pg4_cases1=
+    pg4_cases2=
+    pg4_cases_per=
+
+    pg4_deaths1=
+    pg4_deaths2=
+    pg4_deaths_per=
 
 # Call create_figures()
 create_figures(trend_c,trend_d)
