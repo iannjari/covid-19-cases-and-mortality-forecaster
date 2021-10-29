@@ -9,9 +9,10 @@ import os
 import plotly.express as px
 import pandas as pd
 import plotly.graph_objects as go
-
+from matplotlib import pyplot as plt
+import seaborn as sns
 from fpdf import FPDF
-import matplotlib as plt
+
 
 pwd=os.getcwd()
 
@@ -123,24 +124,35 @@ def create_figures(trend_c,trend_d):
                     showarrow = False
                     )]
                     )
+  
+    plt.figure(figsize=(9,6))
+    # Time series plot with Seaborn lineplot()
+    fig3= sns.lineplot(x=trend_c["Date"], y=trend_c['Global Cases'],data=trend_c,
+                ci=None)
+    # axis labels
+    plt.xlabel("Date", size=14)
+    plt.ylabel("Daily New Cases", size=14)
+    # save image as PNG file
+    plt.savefig("fig3.png",
+                        format='png',
+                        dpi=150)
     
-    fig3 = px.line(trend_c,x=trend_c["Date"], y=trend_c['Global Cases'],
-                  
-                  title='Global Cases Trend',
-                  labels={"y": "No. of Cases"}
-                  ) 
-    
-    fig4 = px.line(trend_d,x=trend_d["Date"], y=trend_d['Global Deaths'],
-                  
-                  title='Global Deaths Trend',
-                  labels={"y": "No. of Deaths"}
-                  )
+    fig4 = sns.lineplot(x=trend_d["Date"], y=trend_d['Global Deaths'],data=trend_d,
+                ci=None)
+    # axis labels
+    plt.xlabel("Date", size=14)
+    plt.ylabel("Global Deaths", size=14)
+    plt.grid()
+    # save image as PNG file
+    plt.savefig("fig4.png",
+                format='png',
+                dpi=150)
     
         
     fig1.write_image("fig1.png")
     fig2.write_image("fig2.png")
-    fig3.write_image("fig3.png")
-    fig4.write_image("fig4.png")
+    #fig3.write_image("fig3.png")
+    #fig4.write_image("fig4.png")
 
 # Function to group data by region
 def regions_group(case_map,death_map):
@@ -158,7 +170,7 @@ def regions_group(case_map,death_map):
     return grouped_deaths,grouped_cases
 
 # Create variables for report paragraphs
-def paragraph_vars():
+'''def paragraph_vars():
     pg2_cases=
     pg2_deaths=
 
@@ -186,13 +198,13 @@ def paragraph_vars():
 
     pg4_deaths1=
     pg4_deaths2=
-    pg4_deaths_per=
+    pg4_deaths_per= '''
 
 # Call create_figures()
 create_figures(trend_c,trend_d)
 
 # Call regions_group()
-regions_group(case_map,death_map)
+#regions_group(case_map,death_map)
 
 
 WIDTH = 210
