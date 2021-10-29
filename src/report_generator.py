@@ -65,7 +65,7 @@ trend_d['Global Deaths']=list_dataframe1
 trend_d=trend_d.tail(14)
 
 # Create figures for use in PDF report
-def create_figures(trend_c,trend_d):
+def create_figures(trend_c,trend_d,grouped_cases):
     fig1 = go.Figure(data=go.Choropleth(
             locations = case_map['CODE'],
             z = case_map['Total Cases'],
@@ -150,12 +150,16 @@ def create_figures(trend_c,trend_d):
                 format='png',
                 dpi=150)
     
-
-
+    # Pie chart for total global cases by region
+    grouped_cases=grouped_cases.reset_index()
+    labels_c=grouped_cases['Region']
+    values_c = grouped_cases['Total Cases']
+    # Using `hole` to create a donut-like pie chart
+    fig5 = go.Figure(data=[go.Pie(labels=labels_c, values=values_c, hole=.3)])
         
     fig1.write_image("fig1.png")
     fig2.write_image("fig2.png")
-    
+    fig5.write_image("fig5.png")
 
 # Function to group data by region
 def regions_group(case_map,death_map):
@@ -212,11 +216,11 @@ def paragraph_vars(global_plot_data_cases, global_plot_data_deaths, grouped_case
 
     return pg2_cases, pg2_deaths, pg3_africa_case, pg3_africa_death, pg3_europe_case,pg3_europe_death, pg3_asia_case, pg3_asia_death, pg3_na_case, pg3_na_death,pg3_sa_case, pg3_sa_death,  pg3_au_case, pg3_au_death, pg4_cases1, pg4_cases2, pg4_cases_per, pg4_deaths1,pg4_deaths2, pg4_deaths_per
 
-# Call create_figures()
+# Call create_vars()
 paragraph_vars(global_plot_data_cases, global_plot_data_deaths, grouped_cases, grouped_deaths)
 
 # Call create_figures()
-create_figures(trend_c,trend_d)
+create_figures(trend_c,trend_d,grouped_cases)
 
 
 
