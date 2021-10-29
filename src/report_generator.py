@@ -132,11 +132,13 @@ def create_figures(trend_c,trend_d):
     # axis labels
     plt.xlabel("Date", size=14)
     plt.ylabel("Daily New Cases", size=14)
+    plt.grid()
     # save image as PNG file
     plt.savefig("fig3.png",
                         format='png',
                         dpi=150)
     
+    plt.figure(figsize=(9,6))
     fig4 = sns.lineplot(x=trend_d["Date"], y=trend_d['Global Deaths'],data=trend_d,
                 ci=None)
     # axis labels
@@ -148,11 +150,12 @@ def create_figures(trend_c,trend_d):
                 format='png',
                 dpi=150)
     
+
+
         
     fig1.write_image("fig1.png")
     fig2.write_image("fig2.png")
-    #fig3.write_image("fig3.png")
-    #fig4.write_image("fig4.png")
+    
 
 # Function to group data by region
 def regions_group(case_map,death_map):
