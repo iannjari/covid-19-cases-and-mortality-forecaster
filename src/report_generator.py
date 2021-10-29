@@ -65,7 +65,7 @@ trend_d['Global Deaths']=list_dataframe1
 trend_d=trend_d.tail(14)
 
 # Create figures for use in PDF report
-def create_figures(trend_c,trend_d,grouped_cases):
+def create_figures(trend_c,trend_d,grouped_cases,grouped_deaths):
     fig1 = go.Figure(data=go.Choropleth(
             locations = case_map['CODE'],
             z = case_map['Total Cases'],
@@ -157,9 +157,17 @@ def create_figures(trend_c,trend_d,grouped_cases):
     # Using `hole` to create a donut-like pie chart
     fig5 = go.Figure(data=[go.Pie(labels=labels_c, values=values_c, hole=.3)])
         
+    # Pie chart for total global deaths by region
+    grouped_deaths=grouped_deaths.reset_index()
+    labels_d=grouped_deaths['Region']
+    values_d = grouped_cases['Total Cases']
+    # Using `hole` to create a donut-like pie chart
+    fig6 = go.Figure(data=[go.Pie(labels=labels_d, values=values_d, hole=.3)])
+
     fig1.write_image("fig1.png")
     fig2.write_image("fig2.png")
     fig5.write_image("fig5.png")
+    fig6.write_image("fig6.png")
 
 # Function to group data by region
 def regions_group(case_map,death_map):
@@ -220,7 +228,7 @@ def paragraph_vars(global_plot_data_cases, global_plot_data_deaths, grouped_case
 paragraph_vars(global_plot_data_cases, global_plot_data_deaths, grouped_cases, grouped_deaths)
 
 # Call create_figures()
-create_figures(trend_c,trend_d,grouped_cases)
+create_figures(trend_c,trend_d,grouped_cases,grouped_deaths)
 
 
 
