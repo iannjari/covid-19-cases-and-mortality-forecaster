@@ -12,6 +12,7 @@ import plotly.graph_objects as go
 from matplotlib import pyplot as plt
 import seaborn as sns
 from fpdf import FPDF
+from datetime import date
 
 
 pwd=os.getcwd()
@@ -234,15 +235,31 @@ create_figures(trend_c,trend_d,grouped_cases,grouped_deaths)
 
 WIDTH = 210
 HEIGHT = 297
+today = date.today()
+#Textual month, day and year	
+today= today.strftime("%B %d, %Y")
 
 pdf = FPDF() # A4 (210 by 297 mm)
 
 pdf.add_page()
-pdf.image("fig1.png")
-pdf.image("fig2.png")
+pdf.set_font('Arial', '', 24)  
+pdf.ln(60)
+pdf.write(5, f"Covid Analytics Report")
+pdf.ln(10)
+pdf.set_font('Arial', '', 16)
+pdf.write(4, f'{today}')
+pdf.ln(5)
 
 pdf.add_page()
-pdf.image("fig3.png", 0, 0, WIDTH)
-pdf.image("fig4.png", 0, 0, WIDTH)
+pdf.image("fig1.png",10,10,WIDTH-20)
+pdf.image("fig2.png",10,HEIGHT-150,WIDTH-20)
+
+pdf.add_page()
+pdf.image("fig3.png", 10, 10, WIDTH-20)
+pdf.image("fig4.png", 10, HEIGHT-150, WIDTH-20)
+
+pdf.add_page()
+pdf.image("fig5.png", 10, 10, WIDTH-20)
+pdf.image("fig6.png", 10, HEIGHT-150, WIDTH-20)
 
 pdf.output('testpdf.pdf', 'F')
