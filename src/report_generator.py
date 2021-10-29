@@ -258,6 +258,7 @@ pdf.ln(10)
 pdf.set_font('Arial', '', 16)
 pdf.write(4, f'Total cases recorded globally have now reached {pg2_cases}')
 pdf.image("fig2.png",10,HEIGHT-150,WIDTH-20)
+pdf.write(4, f'Total deaths recorded globally have now reached {pg2_deaths}')
 
 pdf.add_page()
 pdf.image("fig3.png", 10, 10, WIDTH-20)
