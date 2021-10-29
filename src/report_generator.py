@@ -192,6 +192,7 @@ grouped_cases,grouped_deaths=regions_group(case_map,death_map)
 # Create variables for report paragraphs
 
 def paragraph_vars(global_plot_data_cases, global_plot_data_deaths, grouped_cases, grouped_deaths):
+    global pg2_cases, pg2_deaths, pg3_africa_case, pg3_africa_death, pg3_europe_case,pg3_europe_death, pg3_asia_case, pg3_asia_death, pg3_na_case, pg3_na_death,pg3_sa_case, pg3_sa_death,  pg3_au_case, pg3_au_death, pg4_cases1, pg4_cases2, pg4_cases_per, pg4_deaths1,pg4_deaths2, pg4_deaths_per
     pg2_cases=global_plot_data_cases['Global Cases'].sum()
     pg2_deaths=global_plot_data_deaths['Global Deaths'].sum()
 
@@ -223,8 +224,6 @@ def paragraph_vars(global_plot_data_cases, global_plot_data_deaths, grouped_case
     pg4_deaths2=pg4_deaths.iloc[-1]
     pg4_deaths_per=((pg4_deaths2 - pg4_deaths1)/pg4_deaths1)*100
 
-    return pg2_cases, pg2_deaths, pg3_africa_case, pg3_africa_death, pg3_europe_case,pg3_europe_death, pg3_asia_case, pg3_asia_death, pg3_na_case, pg3_na_death,pg3_sa_case, pg3_sa_death,  pg3_au_case, pg3_au_death, pg4_cases1, pg4_cases2, pg4_cases_per, pg4_deaths1,pg4_deaths2, pg4_deaths_per
-
 # Call create_vars()
 paragraph_vars(global_plot_data_cases, global_plot_data_deaths, grouped_cases, grouped_deaths)
 
@@ -251,7 +250,13 @@ pdf.write(4, f'{today}')
 pdf.ln(5)
 
 pdf.add_page()
+pdf.set_font('Arial', '', 24)  
+pdf.ln(60)
+pdf.write(5, f"Total Cases By Country Globally")
 pdf.image("fig1.png",10,10,WIDTH-20)
+pdf.ln(10)
+pdf.set_font('Arial', '', 16)
+pdf.write(4, f'Total cases recorded globally have now reached {pg2_cases}')
 pdf.image("fig2.png",10,HEIGHT-150,WIDTH-20)
 
 pdf.add_page()
