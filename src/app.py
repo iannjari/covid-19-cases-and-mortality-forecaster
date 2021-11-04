@@ -36,13 +36,15 @@ app.layout = html.Div([
 
 index_page = html.Div([
     #dcc.Link('Home', href='/page-1'),
+    html.H1('Global Caseload and Mortality by Country',
+            style={'textAlign':'center'}),
     html.Br(),
     dcc.Link('Cases and Deaths By Country', href='/page-1'),
     html.Br(),
     dcc.Link('Generate Report', href='/page-2'),
     html.Br(),
     dcc.Link('Predict', href='/page-3'),
-    
+    html.Br(),
     html.Br(),
     
      dcc.Dropdown(
@@ -73,7 +75,8 @@ index_page = html.Div([
 ])
 
 page_1_layout = html.Div([
-    html.H1('Cases and Deaths by Country'),
+    html.H1('Cases and Deaths by Country',
+        style={'textAlign':'center'}),
     html.Br(),
     
     dcc.Link('Home', href='/index_page'),
