@@ -53,6 +53,8 @@ index_page = html.Div([
             {'label': 'See Global Mortality', 'value': 'Deaths'}],
             style={'textAlign': 'center',
             'width':'50%',
+            'margin-left': 'auto',
+            'margin-right': 'auto'
             }
             ),
      
@@ -60,7 +62,10 @@ index_page = html.Div([
     html.Br(),
     html.Br(),
     
-    dcc.Graph(id="choropleth", figure=fig3),
+    dcc.Graph(id="choropleth", figure=fig3,
+                style={'width':'75%',
+               'margin-left': 'auto',
+               'margin-right': 'auto' }),
     
     html.Br(),
     
@@ -80,24 +85,32 @@ page_1_layout = html.Div([
     html.Br(),
     html.Br(),
     
+    html.Div([
     dcc.Dropdown(
         id='dropdown',
         value = 'Afghanistan',
-        options=[{'label': i, 'value': i} for i in df2.columns[1:]]),
+        options=[{'label': i, 'value': i} for i in df2.columns[1:]],
+        style={'width': '50%',
+                'margin-left': 'auto',
+                'margin-right': 'auto'}),
     
     dcc.Graph(id='graph'),
-     html.Div(id='dd-output-container1'),
-    
+     html.Div(id='dd-output-container1'),],
+     style={'width': '50%','display': 'inline-block'}),
+    html.Div([
     dcc.Dropdown(
         id='dropdown2',
         value = 'Afghanistan',
-        options=[{'label': i, 'value': i} for i in df7.columns[1:]]),
+        options=[{'label': i, 'value': i} for i in df7.columns[1:]],
+        style={'width': '50%',
+                'margin-left': 'auto',
+                'margin-right': 'auto'}),
     
     dcc.Graph(id='graph2'),
     
-    html.Div(id='dd-output-container')
+    html.Div(id='dd-output-container')],
+    style={'width': '50%', 'display': 'inline-block'})
 ])
-
 
 
 
