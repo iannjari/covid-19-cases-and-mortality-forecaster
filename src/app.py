@@ -5,7 +5,7 @@ from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
 import plotly.graph_objects as go 
-
+#from plotly import io
 import os
 
 pwd=os.getcwd()
@@ -50,8 +50,14 @@ index_page = html.Div([
         value = 'Cases',
         options=[
             {'label': 'See Global Cases', 'value': 'Cases'},
-            {'label': 'See Global Mortality', 'value': 'Deaths'}]),
+            {'label': 'See Global Mortality', 'value': 'Deaths'}],
+            style={'textAlign': 'center',
+            'width':'50%',
+            }
+            ),
      
+    html.Br(),
+    html.Br(),
     html.Br(),
     
     dcc.Graph(id="choropleth", figure=fig3),
