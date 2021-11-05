@@ -80,7 +80,6 @@ def create_figures(trend_c,trend_d,grouped_cases,grouped_deaths):
             ))
 
     fig1.update_layout(
-        title_text='Cumulative Cases per Country',
         geo=dict(
             showframe=False,
             showcoastlines=False,
@@ -109,7 +108,6 @@ def create_figures(trend_c,trend_d,grouped_cases,grouped_deaths):
                     ))
 
     fig2.update_layout(
-                title_text='Cumulative Deaths per Country',
                 geo=dict(
                     showframe=False,
                     showcoastlines=False,
@@ -120,8 +118,6 @@ def create_figures(trend_c,trend_d,grouped_cases,grouped_deaths):
                     y=0.1,
                     xref='paper',
                     yref='paper',
-                    text='Source: <a href="https://github.com/CSSEGISandData/COVID-19">\
-                        JHU CSSE COVID-19 Data</a>',
                     showarrow = False
                     )]
                     )
@@ -250,18 +246,18 @@ pdf.write(4, f'{today}')
 pdf.ln(5)
 
 pdf.add_page()
-pdf.set_font('Arial', '', 24)  
-pdf.ln(60)
-pdf.write(5, f"Total Cases By Country Globally")
+pdf.set_font('Arial', '', 30)  
+pdf.cell(2,2,f"Total Cases By Country Globally")
 pdf.ln()
-pdf.image("fig1.png",10,10,WIDTH-20)
-pdf.ln(10)
+pdf.image("fig1.png",x=10,y=30,h=HEIGHT-150,w=WIDTH-20)
+pdf.ln()
+pdf.ln()
 pdf.set_font('Arial', '', 16)
-pdf.write(4, f'Total cases recorded globally have now reached {pg2_cases}')
+pdf.cell(10,40, f'Total cases recorded globally have now reached {pg2_cases}')
 pdf.ln()
-pdf.image("fig2.png",10,HEIGHT-150,WIDTH-20)
+pdf.image("fig2.png",x=10,y=HEIGHT/2,h=HEIGHT-150,w=WIDTH-20)
 pdf.ln()
-pdf.write(4, f'Total deaths recorded globally have now reached {pg2_deaths}')
+pdf.cell(10,(HEIGHT/2)+10, f'Total deaths recorded globally have now reached {pg2_deaths}')
 
 pdf.add_page()
 pdf.image("fig3.png", 10, 10, WIDTH-20)
