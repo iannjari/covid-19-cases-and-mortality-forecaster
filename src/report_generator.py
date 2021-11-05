@@ -220,8 +220,19 @@ HEIGHT = 297
 today = date.today()
 #Textual month, day and year	
 today= today.strftime("%B %d, %Y")
-
 pdf = FPDF() # A4 (210 by 297 mm)
+
+
+hy=HEIGHT/2-40
+hj=hy+148
+heading11='Total Cases By Country Globally'
+figure11=pdf.image("fig1.png",x=10,y=20,h=HEIGHT-180,w=WIDTH-40)
+line11=pdf.cell(10,((HEIGHT-180)+60), f'Total cases recorded globally have now reached {pg2_cases}')
+heading12='Total Deaths Globally'
+figure12=pdf.image("fig2.png",x=10,y=148,h=HEIGHT/2-40,w=WIDTH-40)
+line12=pdf.cell(10,60, f'Total deaths recorded globally have now reached {pg2_deaths}')
+
+
 
 pdf.add_page()
 pdf.set_font('Arial', '', 24)  
