@@ -85,14 +85,7 @@ def create_figures(trend_c,trend_d,grouped_cases,grouped_deaths):
             showcoastlines=False,
             projection_type='equirectangular'
             ),
-        annotations = [dict(
-            x=0.55,
-            y=0.1,
-            xref='paper',
-            yref='paper',
-                showarrow = False
-                        )]
-                    )
+        )
     
         
     fig2= go.Figure(data=go.Choropleth(
@@ -113,14 +106,8 @@ def create_figures(trend_c,trend_d,grouped_cases,grouped_deaths):
                     showcoastlines=False,
                     projection_type='equirectangular'
                 ),
-                annotations = [dict(
-                    x=0.55,
-                    y=0.1,
-                    xref='paper',
-                    yref='paper',
-                    showarrow = False
-                    )]
-                    )
+                
+                )
   
     plt.figure(figsize=(9,6))
     # Time series plot with Seaborn lineplot()
