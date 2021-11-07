@@ -207,7 +207,6 @@ def paragraph_vars(global_plot_data_cases, global_plot_data_deaths, grouped_case
     pg4_deaths1=pg4_deaths.loc[0].at['Global Deaths']
     pg4_deaths2=pg4_deaths.iloc[-1].at['Global Deaths']
     pg4_deaths_per=((pg4_deaths2 - pg4_deaths1)/pg4_deaths1)*100
-    print(pg4_deaths_per)
     pg4_deaths_per=str(round(pg4_deaths_per, 2))
 
 # Call create_vars()
@@ -233,13 +232,12 @@ heading12='Total By Country Deaths Globally'
 figure12="fig2.png"
 line12=f'Total deaths recorded globally have now reached {pg2_deaths}'
 
-heading31='Total New Cases For Last 2 Weeks Globally'
-figure31="fig3.png"
-line31=f'Total Global Cases have increased {pg4_cases_per} % from {pg4_cases1} to {pg4_cases2}'
-heading32='Total New Deaths For Last 2 Weeks Globally'
-figure32="fig4.png"
-line32=f'Total Global Deaths have increased {pg4_deaths_per} % from {pg4_deaths1} to {pg4_deaths2}'
-
+heading21='Total New Cases For Last 2 Weeks Globally'
+figure21="fig3.png"
+line21=f'Total Global Cases have increased {pg4_cases_per}% from {pg4_cases1} to {pg4_cases2} in the last two weeks'
+heading22='Total New Deaths For Last 2 Weeks Globally'
+figure22="fig4.png"
+line22=f'Total Global Deaths have increased {pg4_deaths_per}% from {pg4_deaths1} to {pg4_deaths2} in the last two weeks'
 
 
 pdf.add_page()
