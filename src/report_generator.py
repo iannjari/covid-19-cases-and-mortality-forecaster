@@ -224,6 +224,7 @@ today = date.today()
 today= today.strftime("%B %d, %Y")
 pdf = FPDF('P', 'mm', (210,296))
 
+emptyline=''
 
 heading11='Total Cases By Country Globally'
 figure11="fig1.png"
@@ -234,10 +235,12 @@ line12=f'Total deaths recorded globally have now reached {pg2_deaths}'
 
 heading31='Composition of Cases by Region'
 figure31="fig5.png"
-line31=f'Deaths in Africa are {pg3_africa_case}, Europe {pg3_europe_case}, Asia {pg3_asia_case}, Australia and Oceania {pg3_au_case}, North America {pg3_na_case} and South America {pg3_sa_case} '
+line31=f'Deaths in Africa are {pg3_africa_case}, Europe {pg3_europe_case}, Asia {pg3_asia_case}, Australia and Oceania {pg3_au_case}'
+line33=f'North America {pg3_na_case} and South America {pg3_sa_case} '
 heading32='Composition of Deaths by Region'
 figure32="fig6.png"
-line32=f'Deaths in Africa are {pg3_africa_death}, Europe {pg3_europe_death}, Asia {pg3_asia_death}, Australia and Oceania {pg3_au_death}, North America {pg3_na_death} and South America {pg3_sa_death} '
+line32=f'Deaths in Africa are {pg3_africa_death}, Europe {pg3_europe_death}, Asia {pg3_asia_death}, Australia and Oceania {pg3_au_death}'
+line34=f'North America {pg3_na_death} and South America {pg3_sa_death} '
 
 heading21='Total New Cases For Last 2 Weeks Globally'
 figure21="fig3.png"
@@ -256,7 +259,7 @@ pdf.set_font('Arial', '', 16)
 pdf.write(4, f'{today}')
 pdf.ln(5)
 
-def generate_reports(heading1,figure1,line1,heading2,figure2,line2):
+def generate_reports(heading1,figure1,line1,heading2,figure2,line2,line3,line4):
     pdf.add_page()
     pdf.set_font('Arial', '', 20)  
     pdf.cell(10,5,heading1)
@@ -265,6 +268,8 @@ def generate_reports(heading1,figure1,line1,heading2,figure2,line2):
     pdf.ln(110)
     pdf.set_font('Arial', '', 10)
     pdf.cell(10,10,line1)
+    pdf.ln()
+    pdf.cell(1,1,line3)
     pdf.ln(10)
     pdf.set_font('Arial','',20)
     pdf.cell(10,10,heading2)
@@ -273,10 +278,12 @@ def generate_reports(heading1,figure1,line1,heading2,figure2,line2):
     pdf.ln(110)
     pdf.set_font('Arial', '', 10)
     pdf.cell(10,10,line2)
+    pdf.ln()
+    pdf.cell(1,1,line4)
 
-generate_reports(heading11,figure11,line11,heading12,figure12,line12)
-generate_reports(heading21,figure21,line21,heading22,figure22,line22)
-generate_reports(heading31,figure31,line31,heading32,figure32,line32)
+generate_reports(heading11,figure11,line11,heading12,figure12,line12,emptyline,emptyline)
+generate_reports(heading21,figure21,line21,heading22,figure22,line22,emptyline,emptyline)
+generate_reports(heading31,figure31,line31,heading32,figure32,line32,line33,line34)
 
 pdf.output('testpdf.pdf', 'F')
 
