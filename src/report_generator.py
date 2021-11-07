@@ -254,7 +254,7 @@ def funcy(heading1,figure1,line1,heading2,figure2,line2):
     pdf.set_font('Arial','',20)
     pdf.cell(10,10,heading2)
     pdf.ln()
-    pdf.image(figure2,y=173,x=10,h=110,w=120)
+    pdf.image(figure2,y=163,x=10,h=110,w=120)
     pdf.ln(110)
     pdf.set_font('Arial', '', 10)
     pdf.cell(10,10,line2)
