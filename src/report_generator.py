@@ -179,23 +179,23 @@ def paragraph_vars(global_plot_data_cases, global_plot_data_deaths, grouped_case
     pg2_cases=global_plot_data_cases['Global Cases'].sum()
     pg2_deaths=global_plot_data_deaths['Global Deaths'].sum()
 
-    pg3_africa_case=grouped_cases.loc['Africa']
-    pg3_africa_death=grouped_deaths.loc['Africa']
+    pg3_africa_case=grouped_cases.loc['Africa'].at['Total Cases']
+    pg3_africa_death=grouped_deaths.loc['Africa'].at['Total Deaths']
     
-    pg3_europe_case=grouped_cases.loc['Europe']
-    pg3_europe_death=grouped_deaths.loc['Europe']
+    pg3_europe_case=grouped_cases.loc['Europe'].at['Total Cases']
+    pg3_europe_death=grouped_deaths.loc['Europe'].at['Total Deaths']
 
-    pg3_asia_case=grouped_cases.loc['Asia']
-    pg3_asia_death=grouped_deaths.loc['Asia']
+    pg3_asia_case=grouped_cases.loc['Asia'].at['Total Cases']
+    pg3_asia_death=grouped_deaths.loc['Asia'].at['Total Deaths']
 
-    pg3_na_case=grouped_cases.loc['North America']
-    pg3_na_death=grouped_deaths.loc['North America']
+    pg3_na_case=grouped_cases.loc['North America'].at['Total Cases']
+    pg3_na_death=grouped_deaths.loc['North America'].at['Total Deaths']
 
-    pg3_sa_case=grouped_cases.loc['South America']
-    pg3_sa_death=grouped_deaths.loc['South America']
+    pg3_sa_case=grouped_cases.loc['South America'].at['Total Cases']
+    pg3_sa_death=grouped_deaths.loc['South America'].at['Total Deaths']
 
-    pg3_au_case=grouped_cases.loc['Australia and Oceania']
-    pg3_au_death=grouped_deaths.loc['Australia and Oceania']
+    pg3_au_case=grouped_cases.loc['Australia and Oceania'].at['Total Cases']
+    pg3_au_death=grouped_deaths.loc['Australia and Oceania'].at['Total Deaths']
 
     pg4_cases=global_plot_data_cases['Global Cases'].tail(14).reset_index().drop(columns=['index'])
     pg4_cases1=pg4_cases.loc[0].at['Global Cases']
