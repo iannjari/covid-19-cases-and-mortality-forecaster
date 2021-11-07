@@ -230,12 +230,12 @@ heading12='Total By Country Deaths Globally'
 figure12="fig2.png"
 line12=f'Total deaths recorded globally have now reached {pg2_deaths}'
 
-heading21='Total New Cases For Last 2 Weeks Globally'
-figure21="fig3.png"
-line21=f'Total cases recorded globally have now reached {pg2_cases}'
-heading22='Total New Deaths For Last 2 Weeks Globally'
-figure22="fig4.png"
-line22=f'Total deaths recorded globally have now reached {pg2_deaths}'
+heading31='Total New Cases For Last 2 Weeks Globally'
+figure31="fig3.png"
+line31=f'Total Global Cases have increased {pg4_cases_per} from {pg4_cases1} to {pg4_cases2}'
+heading32='Total New Deaths For Last 2 Weeks Globally'
+figure32="fig4.png"
+line32=f'Total Global Deaths have increased {pg4_deaths_per} from {pg4_deaths1} to {pg4_deaths2}'
 
 
 
@@ -267,7 +267,7 @@ def generate_reports(heading1,figure1,line1,heading2,figure2,line2):
     pdf.cell(10,10,line2)
 
 generate_reports(heading11,figure11,line11,heading12,figure12,line12)
-generate_reports(heading21,figure21,line21,heading22,figure22,line22)
+generate_reports(heading31,figure31,line31,heading32,figure32,line32)
 
 pdf.add_page()
 pdf.image("fig3.png", 10, 10, WIDTH-20)
