@@ -220,17 +220,15 @@ HEIGHT = 297
 today = date.today()
 #Textual month, day and year	
 today= today.strftime("%B %d, %Y")
-pdf = FPDF() # A4 (210 by 297 mm)
+pdf = FPDF('P', 'mm', (210,296))
 
 
-hy=HEIGHT/2-40
-hj=hy+148
 heading11='Total Cases By Country Globally'
-figure11=pdf.image("fig1.png",x=10,y=20,h=HEIGHT-180,w=WIDTH-40)
-line11=pdf.cell(10,((HEIGHT-180)+60), f'Total cases recorded globally have now reached {pg2_cases}')
+figure11="fig1.png"
+line11=f'Total cases recorded globally have now reached {pg2_cases}'
 heading12='Total Deaths Globally'
-figure12=pdf.image("fig2.png",x=10,y=148,h=HEIGHT/2-40,w=WIDTH-40)
-line12=pdf.cell(10,60, f'Total deaths recorded globally have now reached {pg2_deaths}')
+figure12="fig2.png"
+line12=f'Total deaths recorded globally have now reached {pg2_deaths}'
 
 
 
@@ -243,29 +241,33 @@ pdf.set_font('Arial', '', 16)
 pdf.write(4, f'{today}')
 pdf.ln(5)
 
-pdf.add_page()
-pdf.set_font('Arial', '', 20)  
-pdf.cell(20,10,f"Total Cases By Country Globally")
-pdf.ln()
-pdf.image("fig1.png",x=10,y=20,h=HEIGHT-180,w=WIDTH-40)
-pdf.ln()
-pdf.set_font('Arial', '', 15)
-pdf.cell(10,((HEIGHT-180)+60), f'Total cases recorded globally have now reached {pg2_cases}')
-pdf.ln()
-hy=HEIGHT/2-40
-hj=hy+148
-pdf.set_font('Arial', '', 20)  
-pdf.cell(20,140,f"Total Cases By Country Globally")
+def funcy(heading1,figure1,line1,heading2,figure2,line2):
+    pdf.add_page()
+    pdf.set_font('Arial', '', 20)  
+    pdf.cell(10,5,heading1)
+    pdf.ln()
+    pdf.image(figure1,x=30,y=25,h=110,w=120)
+    pdf.ln(110)
+    pdf.set_font('Arial', '', 10)
+    pdf.cell(10,10,line1)
+    pdf.ln(10)
+    pdf.set_font('Arial','',20)
+    pdf.cell(10,10,heading2)
+    pdf.ln()
+    pdf.image(figure2,y=173,x=10,h=110,w=120)
+    pdf.ln(110)
+    pdf.set_font('Arial', '', 10)
+    pdf.cell(10,10,line2)
 
-pdf.image("fig2.png",x=10,y=148,h=HEIGHT/2-40,w=WIDTH-40)
-pdf.set_font('Arial', '', 15) 
-pdf.cell(10,60, f'Total deaths recorded globally have now reached {pg2_deaths}')
+funcy(heading11,figure11,line11,heading12,figure12,line12)
 
 pdf.add_page()
 pdf.image("fig3.png", 10, 10, WIDTH-20)
+pdf.cell(10,200,f'jdnnd ck dfme')
 pdf.image("fig4.png", 10, HEIGHT-150, WIDTH-20)
 
 pdf.add_page()
+pdf.cell(0,10,heading11)
 pdf.image("fig5.png", 10, 10, WIDTH-20)
 pdf.image("fig6.png", 10, HEIGHT-150, WIDTH-20)
 
