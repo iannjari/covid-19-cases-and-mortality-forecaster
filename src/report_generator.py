@@ -232,6 +232,13 @@ heading12='Total By Country Deaths Globally'
 figure12="fig2.png"
 line12=f'Total deaths recorded globally have now reached {pg2_deaths}'
 
+heading31='Composition of Cases by Region'
+figure31="fig5.png"
+line31=f'Deaths in Africa are {pg3_africa_case}, Europe {pg3_europe_case}, Asia {pg3_asia_case}, Australia and Oceania {pg3_au_case}, North America {pg3_na_case} and South America {pg3_sa_case} '
+heading32='Composition of Deaths by Region'
+figure32="fig6.png"
+line32=f'Deaths in Africa are {pg3_africa_death}, Europe {pg3_europe_death}, Asia {pg3_asia_death}, Australia and Oceania {pg3_au_death}, North America {pg3_na_death} and South America {pg3_sa_death} '
+
 heading21='Total New Cases For Last 2 Weeks Globally'
 figure21="fig3.png"
 line21=f'Total Global Cases have increased {pg4_cases_per}% from {pg4_cases1} to {pg4_cases2} in the last two weeks'
