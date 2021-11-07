@@ -241,7 +241,7 @@ pdf.set_font('Arial', '', 16)
 pdf.write(4, f'{today}')
 pdf.ln(5)
 
-def funcy(heading1,figure1,line1,heading2,figure2,line2):
+def generate_reports(heading1,figure1,line1,heading2,figure2,line2):
     pdf.add_page()
     pdf.set_font('Arial', '', 20)  
     pdf.cell(10,5,heading1)
@@ -259,7 +259,7 @@ def funcy(heading1,figure1,line1,heading2,figure2,line2):
     pdf.set_font('Arial', '', 10)
     pdf.cell(10,10,line2)
 
-funcy(heading11,figure11,line11,heading12,figure12,line12)
+generate_reports(heading11,figure11,line11,heading12,figure12,line12)
 
 pdf.add_page()
 pdf.image("fig3.png", 10, 10, WIDTH-20)
