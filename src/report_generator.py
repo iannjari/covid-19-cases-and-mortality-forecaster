@@ -226,9 +226,16 @@ pdf = FPDF('P', 'mm', (210,296))
 heading11='Total Cases By Country Globally'
 figure11="fig1.png"
 line11=f'Total cases recorded globally have now reached {pg2_cases}'
-heading12='Total Deaths Globally'
+heading12='Total By Country Deaths Globally'
 figure12="fig2.png"
 line12=f'Total deaths recorded globally have now reached {pg2_deaths}'
+
+heading21='Total New Cases For Last 2 Weeks Globally'
+figure21="fig3.png"
+line21=f'Total cases recorded globally have now reached {pg2_cases}'
+heading22='Total New Deaths For Last 2 Weeks Globally'
+figure22="fig4.png"
+line22=f'Total deaths recorded globally have now reached {pg2_deaths}'
 
 
 
@@ -246,7 +253,7 @@ def generate_reports(heading1,figure1,line1,heading2,figure2,line2):
     pdf.set_font('Arial', '', 20)  
     pdf.cell(10,5,heading1)
     pdf.ln()
-    pdf.image(figure1,x=30,y=25,h=110,w=120)
+    pdf.image(figure1,x=30,y=15,h=110,w=120)
     pdf.ln(110)
     pdf.set_font('Arial', '', 10)
     pdf.cell(10,10,line1)
@@ -254,12 +261,13 @@ def generate_reports(heading1,figure1,line1,heading2,figure2,line2):
     pdf.set_font('Arial','',20)
     pdf.cell(10,10,heading2)
     pdf.ln()
-    pdf.image(figure2,y=163,x=10,h=110,w=120)
+    pdf.image(figure2,y=153,x=10,h=110,w=120)
     pdf.ln(110)
     pdf.set_font('Arial', '', 10)
     pdf.cell(10,10,line2)
 
 generate_reports(heading11,figure11,line11,heading12,figure12,line12)
+generate_reports(heading21,figure21,line21,heading22,figure22,line22)
 
 pdf.add_page()
 pdf.image("fig3.png", 10, 10, WIDTH-20)
