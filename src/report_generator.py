@@ -275,7 +275,9 @@ def generate_reports(heading1,figure1,line1,heading2,figure2,line2):
     pdf.cell(10,10,line2)
 
 generate_reports(heading11,figure11,line11,heading12,figure12,line12)
+generate_reports(heading21,figure21,line21,heading22,figure22,line22)
 generate_reports(heading31,figure31,line31,heading32,figure32,line32)
+
 
 pdf.add_page()
 pdf.image("fig3.png", 10, 10, WIDTH-20)
