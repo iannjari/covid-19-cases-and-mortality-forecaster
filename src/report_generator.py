@@ -278,17 +278,6 @@ generate_reports(heading11,figure11,line11,heading12,figure12,line12)
 generate_reports(heading21,figure21,line21,heading22,figure22,line22)
 generate_reports(heading31,figure31,line31,heading32,figure32,line32)
 
-
-pdf.add_page()
-pdf.image("fig3.png", 10, 10, WIDTH-20)
-pdf.cell(10,200,f'jdnnd ck dfme')
-pdf.image("fig4.png", 10, HEIGHT-150, WIDTH-20)
-
-pdf.add_page()
-pdf.cell(0,10,heading11)
-pdf.image("fig5.png", 10, 10, WIDTH-20)
-pdf.image("fig6.png", 10, HEIGHT-150, WIDTH-20)
-
 pdf.output('testpdf.pdf', 'F')
 
 
