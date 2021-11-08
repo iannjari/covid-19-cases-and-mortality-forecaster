@@ -274,7 +274,7 @@ def generate_reports(heading1,figure1,line1,heading2,figure2,line2,line3,line4):
     pdf.set_font('Arial','',15)
     pdf.cell(10,10,heading2)
     pdf.ln()
-    pdf.image(figure2,y=153,x=10,h=90,w=120)
+    pdf.image(figure2,y=153,x=30,h=90,w=120)
     pdf.ln(100)
     pdf.set_font('Arial', '', 10)
     pdf.cell(10,10,line2)
