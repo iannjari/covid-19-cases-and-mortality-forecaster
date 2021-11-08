@@ -118,7 +118,6 @@ page_1_layout = html.Div([
 
 
 page_2_layout = html.Div([
-    html.H1('Reports'),
     html.Br(),
     html.Div(id='page-2-content'),
     html.Br(),
@@ -126,7 +125,14 @@ page_2_layout = html.Div([
     html.Br(),
     dcc.Link('Cases and Deaths By Country', href='/page-1'),
     html.Br(),
-    dcc.Link('Predict', href='/page-3')
+    dcc.Link('Predict', href='/page-3'),
+    html.Br(),
+    html.H1('Reports'),
+    html.Br(),
+    html.Br(),
+    html.Br(),
+    html.Button("Download Report", id="btn_doc"),
+    dcc.Download(id="download-doc")
     
 ])
 
@@ -252,9 +258,16 @@ def display_map(dropdown3):
         
     return fig3
     
-    
 
-
+@app.callback(
+    Output("download-doc", "data"),
+    Input("btn_doc", "n_clicks"),
+    prevent_initial_call=True,
+)
+def download_doc(n_clicks):
+    return dcc.send_file(
+        "testpdf.pdf"
+    )
     
 app.run_server(debug=True)
 
