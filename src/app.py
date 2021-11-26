@@ -136,6 +136,47 @@ page_2_layout = html.Div([
     
 ])
 
+# Page 3, for predictions
+page_3_layout = html.Div([
+    html.H1('Predict Cases and Deaths by Country',
+        style={'textAlign':'center'}),
+    html.Br(),
+    
+    dcc.Link('Home', href='/index_page'),
+    html.Br(),
+    dcc.Link('Download Report', href='/page-2'),
+    html.Br(),
+    dcc.Link('Cases and Deaths by Country', href='/page-3'),
+    
+    html.Br(),
+    html.Br(),
+    
+    html.Div([
+    dcc.Dropdown(
+        id='dropdown4',
+        value = 'Afghanistan',
+        options=[{'label': i, 'value': i} for i in df2.columns[1:]],
+        style={'width': '50%',
+                'margin-left': 'auto',
+                'margin-right': 'auto'}),
+    
+    dcc.Graph(id='graph4'),
+     html.Div(id='dd-output-container1'),],
+     style={'width': '50%','display': 'inline-block'}),
+    html.Div([
+    dcc.Dropdown(
+        id='dropdown5',
+        value = 'Afghanistan',
+        options=[{'label': i, 'value': i} for i in df7.columns[1:]],
+        style={'width': '50%',
+                'margin-left': 'auto',
+                'margin-right': 'auto'}),
+    
+    dcc.Graph(id='graph5'),
+    
+    html.Div(id='dd-output-container')],
+    style={'width': '50%', 'display': 'inline-block'})
+])
 
 
 
@@ -147,6 +188,8 @@ def display_page(pathname):
         return page_1_layout
     elif pathname == '/page-2':
         return page_2_layout
+    elif pathname == '/page-3':
+        return page_3_layout
     else:
         return index_page
     # You could also return a 404 "URL not found" page here
@@ -268,6 +311,58 @@ def download_doc(n_clicks):
     return dcc.send_file(
         "testpdf.pdf"
     )
+
+#Do the time series prediction
+def time_series(y):
+    pred_list=[]
+    for i in y:
+        i=i-3
+        if i<=0:
+            i=4
+        pred_list.append(i)
+    pred_list=pred_list.reverse()
+
+    return pred_list
+
+@app.callback(
+    [Output("graph4", "figure"),Output("graph5","figure")],
+    [Input('dropdown4', 'value'),
+    Input('dropdown5', 'value')
+     ])
+def prediction_cases(dropdown4,dropdown5):
+    dffd=df1.loc[df1['Country/Region'] == dropdown4]
+    dffd=dffd.reset_index()
+    dffd=dffd.rename_axis(None, axis=1)
+    dffd=dffd.drop(['index','Country/Region'],axis=1)
+    y_data=dffd.loc[0].tail(30)
+    yhat=time_series(y_data)
+
+    # Plot Cases predictions
+    # Plot cases graph
+    fig7 = px.line(df2.tail(30),x=df2["Date"].tail(30), y=yhat,
+                  hover_data={"Date"},
+                  title='Cases By Country',
+                  labels={"y": "No. of Cases"}
+                  )
+
+    
+    dff=df6.loc[df6['Country/Region'] == dropdown5]
+    dff=dff.reset_index()
+    dff=dff.rename_axis(None, axis=1)
+    dff=dff.drop(['index','Country/Region'],axis=1)
+    x_data=dff.loc[0].tail(30)
+    xhat=time_series(x_data)
+    
+    # Plot deaths Predictions
+    fig8 = px.line(df7.tail(30),x=df7["Date"].tail(30), y=xhat,
+                  hover_data={"Date"},
+                  title='Deaths By Country',
+                  labels={"y": "No. of Deaths"}
+                  )
+    
+    return fig7, fig8
+    
+
     
 app.run_server(debug=True)
 
