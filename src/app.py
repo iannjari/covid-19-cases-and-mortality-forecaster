@@ -5,7 +5,6 @@ from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
 import plotly.graph_objects as go 
-#from plotly import io
 import os
 
 pwd=os.getcwd()
@@ -24,6 +23,9 @@ df7=pd.read_excel(pwd+"\\..\\data\\deaths_plot.xlsx")
 
 app = dash.Dash(__name__)
 app.config.suppress_callback_exceptions = True
+app.css.config.serve_locally = True
+app.scripts.config.serve_locally = True
+
 fig = go.Figure()
 fig2=go.Figure()
 fig3=go.Figure()
