@@ -314,17 +314,7 @@ def download_doc(n_clicks):
         "testpdf.pdf"
     )
 
-#Do the time series prediction
-def time_series(y):
-    pred_list=[]
-    for i in y:
-        i=i-3
-        if i<=0:
-            i=4
-        pred_list.append(i)
-    pred_list=pred_list.reverse()
 
-    return pred_list
 
 @app.callback(
     [Output("graph4", "figure"),Output("graph5","figure")],
