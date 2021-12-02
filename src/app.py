@@ -22,9 +22,10 @@ df1=pd.read_excel(pwd+"\\..\\data\\cases.xlsx")
 cases=pd.read_excel(pwd+"\\..\\data\\cases_plot.xlsx")
 
 df6=pd.read_excel(pwd+"\\..\\data\\deaths.xlsx")
-df7=pd.read_excel(pwd+"\\..\\data\\deaths_plot.xlsx")
+deaths=pd.read_excel(pwd+"\\..\\data\\deaths_plot.xlsx")
 
 
+# GLOBAL VARIABLES DECLARATION
 
 app = dash.Dash(__name__)
 app.config.suppress_callback_exceptions = True
@@ -34,6 +35,8 @@ app.scripts.config.serve_locally = True
 fig = go.Figure()
 fig2=go.Figure()
 fig3=go.Figure()
+
+m = Prophet(interval_width=0.95, daily_seasonality=True)
 
 app.layout = html.Div([
     
@@ -97,21 +100,21 @@ page_1_layout = html.Div([
     
     html.Div([
     dcc.Dropdown(
-        id='dropdown',
+        id='dropdown1',
         value = 'Afghanistan',
-        options=[{'label': i, 'value': i} for i in df2.columns[1:]],
+        options=[{'label': i, 'value': i} for i in cases.columns[1:]],
         style={'width': '50%',
                 'margin-left': 'auto',
                 'margin-right': 'auto'}),
     
-    dcc.Graph(id='graph'),
+    dcc.Graph(id='graph1'),
      html.Div(id='dd-output-container1'),],
      style={'width': '50%','display': 'inline-block'}),
     html.Div([
     dcc.Dropdown(
         id='dropdown2',
         value = 'Afghanistan',
-        options=[{'label': i, 'value': i} for i in df7.columns[1:]],
+        options=[{'label': i, 'value': i} for i in deaths.columns[1:]],
         style={'width': '50%',
                 'margin-left': 'auto',
                 'margin-right': 'auto'}),
@@ -162,7 +165,7 @@ page_3_layout = html.Div([
     dcc.Dropdown(
         id='dropdown4',
         value = 'Afghanistan',
-        options=[{'label': i, 'value': i} for i in df2.columns[1:]],
+        options=[{'label': i, 'value': i} for i in cases.columns[1:]],
         style={'width': '50%',
                 'margin-left': 'auto',
                 'margin-right': 'auto'}),
@@ -174,7 +177,7 @@ page_3_layout = html.Div([
     dcc.Dropdown(
         id='dropdown5',
         value = 'Afghanistan',
-        options=[{'label': i, 'value': i} for i in df7.columns[1:]],
+        options=[{'label': i, 'value': i} for i in deaths.columns[1:]],
         style={'width': '50%',
                 'margin-left': 'auto',
                 'margin-right': 'auto'}),
@@ -202,35 +205,29 @@ def display_page(pathname):
     # You could also return a 404 "URL not found" page here
 
 @app.callback(
-    [Output("graph", "figure"),Output("graph2","figure")],
-    [Input('dropdown', 'value'),
+    [Output("graph1", "figure"),Output("graph2","figure")],
+    [Input('dropdown1', 'value'),
      Input('dropdown2', 'value')
      ])
 
 
-def display_graph(dropdown,dropdown2):
+def display_graph(dropdown1,dropdown2):
     
     # Prepare cases graphing data
-    dffd=df1.loc[df1['Country/Region'] == dropdown]
-    dffd=dffd.reset_index()
-    dffd=dffd.rename_axis(None, axis=1)
-    dffd=dffd.drop(['index','Country/Region'],axis=1)
-    
+    plot_data_cases=cases[['Date',dropdown1]]
+
     # Plot cases graph
-    fig = px.line(df2,x=df2["Date"], y=dffd.loc[0],
+    fig = px.line(plot_data_cases,x=plot_data_cases["Date"], y=plot_data_cases[dropdown1],
                   hover_data={"Date"},
                   title='Cases By Country',
                   labels={"y": "No. of Cases"}
                   )
     
     # Prepare deaths graphing data
-    dff=df6.loc[df6['Country/Region'] == dropdown2]
-    dff=dff.reset_index()
-    dff=dff.rename_axis(None, axis=1)
-    dff=dff.drop(['index','Country/Region'],axis=1)
+    plot_data_deaths=deaths[['Date',dropdown2]]
     
     # Plot deaths graph
-    fig2 = px.line(df7,x=df7["Date"], y=dff.loc[0],
+    fig2 = px.line(plot_data_deaths,x=plot_data_deaths["Date"], y=plot_data_deaths[dropdown2],
                   hover_data={"Date"},
                   title='Deaths By Country',
                   labels={"y": "No. of Deaths"}
@@ -326,21 +323,29 @@ def download_doc(n_clicks):
     [Input('dropdown4', 'value'),
     Input('dropdown5', 'value')
      ])
+
 def prediction_cases(dropdown4,dropdown5):
-    dffd=df1.loc[df1['Country/Region'] == dropdown4]
-    dffd=dffd.reset_index()
-    dffd=dffd.rename_axis(None, axis=1)
-    dffd=dffd.drop(['index','Country/Region'],axis=1)
-    y_data=dffd.loc[0].tail(30)
-    yhat=time_series(y_data)
+    
+    # Filter cases prediction data
+    predict_data_cases=cases[['Date',dropdown4]]
+    predict_data_cases=predict_data_cases.rename(columns={'Date':'ds',dropdown4:'y'})
+    predict_data_cases['y']=predict_data_cases['y'].diff()
+    
+    # Predict
+    model = m.fit(predict_data_cases)
+    future = m.make_future_dataframe(periods=14,freq='D')
+    forecast = m.predict(future)
+    forecast=forecast[['ds','yhat']].tail(14)
+    forecast['yhat']=(forecast['yhat'].tail(14)).astype(int)
 
     # Plot Cases predictions
-    # Plot cases graph
-    fig7 = px.line(df2.tail(30),x=df2["Date"].tail(30), y=yhat,
-                  hover_data={"Date"},
-                  title='Cases By Country',
-                  labels={"y": "No. of Cases"}
-                  )
+    fig7 = go.Figure(data=[go.Table(
+            header=dict(values=list(['Date','Cases']),
+                fill_color='paleturquoise',
+                align='left'),
+            cells=dict(values=[forecast['ds'].dt.date, forecast['yhat']],
+               fill_color='lavender',
+               align='left'))
 
     
     dff=df6.loc[df6['Country/Region'] == dropdown5]
