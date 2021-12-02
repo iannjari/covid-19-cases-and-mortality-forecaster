@@ -4,6 +4,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 from prophet import Prophet
 import os
+import numpy as np
 
 pwd=os.getcwd()
 
@@ -25,6 +26,7 @@ for col in predict_data_cases.iloc[:,1:]:
     m.fit(temp_df)
     future = m.make_future_dataframe(periods=14,freq='D')
     forecast = m.predict(future)
+    forecast["yhat"] = np.where(forecast["yhat"]<0,-(forecast["yhat"]),forecast["yhat"])
     predicted_cases[col]=forecast['yhat']
     predicted_cases.rename(columns={'yhat':col})
 
@@ -46,8 +48,10 @@ for col in predict_data_deaths.iloc[:,1:]:
     m.fit(temp_df)
     future = m.make_future_dataframe(periods=14,freq='D')
     forecast = m.predict(future)
+    forecast["yhat"] = np.where(forecast["yhat"]<0,-(forecast["yhat"]),forecast["yhat"])
     predicted_deaths[col]=forecast['yhat']
     predicted_deaths.rename(columns={'yhat':col})
+    
 
 # Save predicted dataset
 predicted_deaths.tail(14).to_csv(pwd+'/../data/deathpredictions.csv')
