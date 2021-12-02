@@ -17,11 +17,12 @@ case_map =pd.read_excel(pwd+"\\..\\data\\casemapdata.xlsx")
 death_map =pd.read_excel(pwd+"\\..\\data\\deathmapdata.xlsx")
 
 
-# Read line plot data
-df1=pd.read_excel(pwd+"\\..\\data\\cases.xlsx")
+# Read cases line plot and predicted data
+case_preds=pd.read_csv(pwd+"\\..\\data\\casepredictions.csv")
 cases=pd.read_excel(pwd+"\\..\\data\\cases_plot.xlsx")
 
-df6=pd.read_excel(pwd+"\\..\\data\\deaths.xlsx")
+# Read deaths line plot and predicted data
+death_preds=pd.read_csv(pwd+"\\..\\data\\deathpredictions.csv")
 deaths=pd.read_excel(pwd+"\\..\\data\\deaths_plot.xlsx")
 
 
@@ -328,45 +329,27 @@ def download_doc(n_clicks):
 def prediction_cases(dropdown4,dropdown5):
     
     # Filter cases prediction data
-    predict_data_cases=cases[['Date',dropdown4]]
-    predict_data_cases=predict_data_cases.rename(columns={'Date':'ds',dropdown4:'y'})
-    predict_data_cases['y']=predict_data_cases['y'].diff()
-    
-    # Predict
-    model = m.fit(predict_data_cases)
-    future = m.make_future_dataframe(periods=14,freq='D')
-    cases_forecast = m.predict(future)
-    cases_forecast=cases_forecast[['ds','yhat']].tail(14)
-    cases_forecast['yhat']=(cases_forecast['yhat'].tail(14)).astype(int)
+    predict_data_cases=case_preds[['Date',dropdown4]]
 
     # Plot Cases predictions
     fig7 = go.Figure(data=[go.Table(
             header=dict(values=list(['Date','Cases']),
                 fill_color='paleturquoise',
                 align='left'),
-            cells=dict(values=[cases_forecast['ds'].dt.date, cases_forecast['yhat']],
+            cells=dict(values=[predict_data_cases['Date'], predict_data_cases[dropdown4]],
                fill_color='lavender',
                align='left'))
             ])
     
     # Filter deaths prediction data
-    predict_data_deaths=deaths[['Date',dropdown5]]
-    predict_data_deaths=predict_data_deaths.rename(columns={'Date':'ds',dropdown4:'y'})
-    predict_data_deaths['y']=predict_data_deaths['y'].diff()
-    
-    # Predict
-    deaths_model = n.fit(predict_data_deaths)
-    future = n.make_future_dataframe(periods=14,freq='D')
-    deaths_forecast = n.predict(future)
-    deaths_forecast=deaths_forecast[['ds','yhat']].tail(14)
-    deaths_forecast['yhat']=(deaths_forecast['yhat'].tail(14)).astype(int)
+    predict_data_deaths=death_preds[['Date',dropdown5]]
 
     # Plot Deaths predictions
     fig8 = go.Figure(data=[go.Table(
-            header=dict(values=list(['Date','Cases']),
+            header=dict(values=list(['Date','Deaths']),
                 fill_color='paleturquoise',
                 align='left'),
-            cells=dict(values=[deaths_forecast['ds'].dt.date, deaths_forecast['yhat']],
+            cells=dict(values=[predict_data_deaths['Date'], predict_data_deaths[dropdown5]],
                fill_color='lavender',
                align='left'))
             ])
