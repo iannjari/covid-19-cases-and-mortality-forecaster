@@ -336,7 +336,7 @@ def prediction_cases(dropdown4,dropdown5):
             header=dict(values=list(['Date','Cases']),
                 fill_color='paleturquoise',
                 align='left'),
-            cells=dict(values=[predict_data_cases['Date'], predict_data_cases[dropdown4]],
+            cells=dict(values=[predict_data_cases['Date'], predict_data_cases[dropdown4].astype(int)],
                fill_color='lavender',
                align='left'))
             ])
@@ -349,7 +349,7 @@ def prediction_cases(dropdown4,dropdown5):
             header=dict(values=list(['Date','Deaths']),
                 fill_color='paleturquoise',
                 align='left'),
-            cells=dict(values=[predict_data_deaths['Date'], predict_data_deaths[dropdown5]],
+            cells=dict(values=[predict_data_deaths['Date'], predict_data_deaths[dropdown5].astype(int)],
                fill_color='lavender',
                align='left'))
             ])
