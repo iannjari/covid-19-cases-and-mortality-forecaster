@@ -37,6 +37,7 @@ fig2=go.Figure()
 fig3=go.Figure()
 
 m = Prophet(interval_width=0.95, daily_seasonality=True)
+n = Prophet(interval_width=0.95, daily_seasonality=True)
 
 app.layout = html.Div([
     
@@ -334,34 +335,42 @@ def prediction_cases(dropdown4,dropdown5):
     # Predict
     model = m.fit(predict_data_cases)
     future = m.make_future_dataframe(periods=14,freq='D')
-    forecast = m.predict(future)
-    forecast=forecast[['ds','yhat']].tail(14)
-    forecast['yhat']=(forecast['yhat'].tail(14)).astype(int)
+    cases_forecast = m.predict(future)
+    cases_forecast=cases_forecast[['ds','yhat']].tail(14)
+    cases_forecast['yhat']=(cases_forecast['yhat'].tail(14)).astype(int)
 
     # Plot Cases predictions
     fig7 = go.Figure(data=[go.Table(
             header=dict(values=list(['Date','Cases']),
                 fill_color='paleturquoise',
                 align='left'),
-            cells=dict(values=[forecast['ds'].dt.date, forecast['yhat']],
+            cells=dict(values=[cases_forecast['ds'].dt.date, cases_forecast['yhat']],
                fill_color='lavender',
                align='left'))
+            ])
+    
+    # Filter deaths prediction data
+    predict_data_deaths=deaths[['Date',dropdown5]]
+    predict_data_deaths=predict_data_deaths.rename(columns={'Date':'ds',dropdown4:'y'})
+    predict_data_deaths['y']=predict_data_deaths['y'].diff()
+    
+    # Predict
+    deaths_model = n.fit(predict_data_deaths)
+    future = n.make_future_dataframe(periods=14,freq='D')
+    deaths_forecast = n.predict(future)
+    deaths_forecast=deaths_forecast[['ds','yhat']].tail(14)
+    deaths_forecast['yhat']=(deaths_forecast['yhat'].tail(14)).astype(int)
 
-    
-    dff=df6.loc[df6['Country/Region'] == dropdown5]
-    dff=dff.reset_index()
-    dff=dff.rename_axis(None, axis=1)
-    dff=dff.drop(['index','Country/Region'],axis=1)
-    x_data=dff.loc[0].tail(30)
-    xhat=time_series(x_data)
-    
-    # Plot deaths Predictions
-    fig8 = px.line(df7.tail(30),x=df7["Date"].tail(30), y=xhat,
-                  hover_data={"Date"},
-                  title='Deaths By Country',
-                  labels={"y": "No. of Deaths"}
-                  )
-    
+    # Plot Deaths predictions
+    fig8 = go.Figure(data=[go.Table(
+            header=dict(values=list(['Date','Cases']),
+                fill_color='paleturquoise',
+                align='left'),
+            cells=dict(values=[deaths_forecast['ds'].dt.date, deaths_forecast['yhat']],
+               fill_color='lavender',
+               align='left'))
+            ])
+
     return fig7, fig8
     
 
