@@ -53,7 +53,7 @@ index_page = html.Div([
     html.Br(),
     dcc.Link('Cases and Deaths By Country', href='/page-1'),
     html.Br(),
-    dcc.Link('Generate Report', href='/page-2'),
+    dcc.Link('Download Report', href='/page-2'),
     html.Br(),
     dcc.Link('Predict', href='/page-3'),
     html.Br(),
@@ -93,7 +93,7 @@ page_1_layout = html.Div([
     
     dcc.Link('Home', href='/index_page'),
     html.Br(),
-    dcc.Link('Generate Report', href='/page-2'),
+    dcc.Link('Download Report', href='/page-2'),
     html.Br(),
     dcc.Link('Predict', href='/page-3'),
     
@@ -133,19 +133,23 @@ page_2_layout = html.Div([
     html.Br(),
     html.Div(id='page-2-content'),
     html.Br(),
+    html.H1('Report',style={'textAlign':'center'}),
     dcc.Link('Home', href='/'),
     html.Br(),
     dcc.Link('Cases and Deaths By Country', href='/page-1'),
     html.Br(),
     dcc.Link('Predict', href='/page-3'),
     html.Br(),
-    html.H1('Reports'),
     html.Br(),
     html.Br(),
+    html.P('Download the latest report on COVID-19 by clicking the button below;',style={'textAlign':'center'}),
     html.Br(),
-    html.Button("Download Report", id="btn_doc"),
-    dcc.Download(id="download-doc")
-    
+    html.Div(
+    [html.Button("Download Report", id="btn_doc"),
+    dcc.Download(id="download-doc")],style={'textAlign':'center'}),
+    html.Br(),
+    html.P('To have the report automatically sent to you via email, enter your email address below then click send.',style={'textAlign':'center'})
+
 ])
 
 # Page 3, for predictions
@@ -158,7 +162,7 @@ page_3_layout = html.Div([
     html.Br(),
     dcc.Link('Download Report', href='/page-2'),
     html.Br(),
-    dcc.Link('Cases and Deaths by Country', href='/page-3'),
+    dcc.Link('Cases and Deaths by Country', href='/page-1'),
     
     html.Br(),
     html.Br(),
