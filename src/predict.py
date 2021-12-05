@@ -31,6 +31,7 @@ for col in predict_data_cases.iloc[:,1:]:
     predicted_cases.rename(columns={'yhat':col})
 
 # Save predicted dataset
+predicted_cases['Date']=future['ds']
 predicted_cases.tail(14).to_csv(pwd+'/../data/casepredictions.csv')
 
 
@@ -54,6 +55,7 @@ for col in predict_data_deaths.iloc[:,1:]:
     
 
 # Save predicted dataset
+predicted_deaths['Date']=future['ds']
 predicted_deaths.tail(14).to_csv(pwd+'/../data/deathpredictions.csv')
 
 
