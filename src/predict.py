@@ -17,7 +17,7 @@ predict_data_cases=cases.diff()
 predict_data_cases['Date']=cases['Date']
 predict_data_cases=predict_data_cases.rename(columns={'Date':'ds'})
 
-predicted_cases=pd.DataFrame(cases['Date'])
+predicted_cases=pd.DataFrame()
 for col in predict_data_cases.iloc[:,1:]:
     m = Prophet(interval_width=0.95, daily_seasonality=True)
     temp_df=pd.DataFrame()
@@ -39,7 +39,7 @@ predict_data_deaths=deaths.diff()
 predict_data_deaths['Date']=deaths['Date']
 predict_data_deaths=predict_data_deaths.rename(columns={'Date':'ds'})
 
-predicted_deaths=pd.DataFrame(deaths['Date'])
+predicted_deaths=pd.DataFrame()
 for col in predict_data_deaths.iloc[:,1:]:
     m = Prophet(interval_width=0.95, daily_seasonality=True)
     temp_df=pd.DataFrame()
