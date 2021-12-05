@@ -1,7 +1,7 @@
 import dash
 from dash import dcc
 from dash import html
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import plotly.express as px
 import pandas as pd
 import plotly.graph_objects as go 
@@ -128,7 +128,6 @@ page_1_layout = html.Div([
 ])
 
 
-
 page_2_layout = html.Div([
     html.Br(),
     html.Div(id='page-2-content'),
@@ -148,8 +147,13 @@ page_2_layout = html.Div([
     [html.Button("Download Report", id="btn_doc"),
     dcc.Download(id="download-doc")],style={'textAlign':'center'}),
     html.Br(),
-    html.P('To have the report automatically sent to you via email, enter your email address below then click send.',style={'textAlign':'center'})
-
+    html.P('To have the report automatically sent to you via email, enter your email address below then click send.',style={'textAlign':'center'}),
+    html.Div([
+    html.Div(dcc.Input(id='input-on-submit', type='email')),
+    html.Button('Submit Email', id='submit-val', n_clicks=0),
+    html.Div(id='container-button-basic',
+             children='Enter a value and press submit')
+    ])
 ])
 
 # Page 3, for predictions
@@ -360,6 +364,15 @@ def prediction_cases(dropdown4,dropdown5):
 
     return fig7, fig8
     
+
+@app.callback(
+    Output('container-button-basic', 'children'),
+    Input('submit-val', 'n_clicks'),
+    State('input-on-submit', 'value')
+)
+def email(n_clicks,value):
+    string='Your email "{}" has been updated sucessfully'.format(value)
+    return string
 
     
 app.run_server(debug=True)
