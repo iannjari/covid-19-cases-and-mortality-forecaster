@@ -7,6 +7,7 @@ import pandas as pd
 import plotly.graph_objects as go 
 import os
 from prophet import Prophet
+import json
 
 pwd=os.getcwd()
 
@@ -149,10 +150,9 @@ page_2_layout = html.Div([
     html.Br(),
     html.P('To have the report automatically sent to you via email, enter your email address below then click send.',style={'textAlign':'center'}),
     html.Div([
-    html.Div(dcc.Input(id='input-on-submit', type='email')),
+    html.Div(dcc.Input(id='input-on-submit', type='email',value='iannjari@gmail.com')),
     html.Button('Submit Email', id='submit-val', n_clicks=0),
-    html.Div(id='container-button-basic',
-             children='Enter a value and press submit')
+    html.Div(id='email-string')
     ])
 ])
 
@@ -200,7 +200,7 @@ page_3_layout = html.Div([
 
 
 
-# Update the index
+# Update the pages index
 @app.callback(dash.dependencies.Output('page-content', 'children'),
               [dash.dependencies.Input('url', 'pathname')])
 def display_page(pathname):
@@ -363,15 +363,34 @@ def prediction_cases(dropdown4,dropdown5):
             ])
 
     return fig7, fig8
-    
+
+
+# Email callback
+
 
 @app.callback(
-    Output('container-button-basic', 'children'),
+    Output('email-string', 'children'),
     Input('submit-val', 'n_clicks'),
     State('input-on-submit', 'value')
 )
 def email(n_clicks,value):
-    string='Your email "{}" has been updated sucessfully'.format(value)
+    # Read JSON
+    with open(pwd+'\\..\\data\\emails.txt') as json_file:
+        email_list = json.load(json_file)
+        if (email_list==None):
+            email_list=['iannjari@gmail.com']
+        else:
+            email_list=list(email_list)
+
+
+    # Validate  and save email address
+    if (value not in email_list):
+        email_list=email_list.append(value)
+        with open(pwd+'\\..\\data\\emails.txt', 'w') as outfile:
+            json.dumps(email_list, outfile)
+        string='Your email "{}" has been updated sucessfully'.format(value)
+    else:
+        string='This email has already been entered'
     return string
 
     
