@@ -42,14 +42,6 @@ fig = go.Figure()
 fig2=go.Figure()
 fig3=go.Figure()
 
-def email_list():
-    email_list=list()
-    with open(pwd+'\\..\\data\\emails.txt','r') as infile:
-        for line in infile:
-            email_list.append(line[:-1])
-            
-    return email_list
-
 
 app.layout = html.Div([
     
