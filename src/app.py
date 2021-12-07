@@ -8,7 +8,10 @@ import plotly.graph_objects as go
 import os
 import smtplib
 from email.message import EmailMessage
-
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
 
 pwd=os.getcwd()
 
@@ -389,17 +392,35 @@ def email(n_clicks,value):
     EMAIL_ADDRESS = "iannjari@gmail.com"
     EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
-    msg = EmailMessage()
-    msg['Subject'] = "COVID-19 REPORT"
-    msg['From'] = EMAIL_ADDRESS
-    msg['To'] = value
+    sender_address = EMAIL_ADDRESS
+    receiver_address = value
+    mail_content = '''Hello,
+    This is a test mail.
+    Here is today's Covid report.
+    If you did not request this mail, kindly ignore it!
+    
+    Thank you!
+    '''
 
-    msg.set_content(f'Here is today`s Covid report.\n'
-                    'If you did not request this mail, kindly ignore it!')
+    message = MIMEMultipart()
+    message['From'] = sender_address
+    message['To'] = receiver_address
+    message['Subject'] = "COVID-19 REPORT"
+    
+
+    message.attach(MIMEText(mail_content, 'plain'))
+    attach_file_name = pwd+"\\..\\data\\testpdf.pdf"
+    attach_file = open(attach_file_name, 'rb') # Open the file as binary mode
+    payload = MIMEBase('application', 'octate-stream')
+    payload.set_payload((attach_file).read())
+    encoders.encode_base64(payload) #encode the attachment
+    #add payload header with filename
+    payload.add_header('Content-Disposition', 'attachment', filename='testpdf.pdf')
+    message.attach(payload)
 
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
         smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-        smtp.send_message(msg)
+        smtp.send_message(message)
         
 app.run_server(debug=True)
 
