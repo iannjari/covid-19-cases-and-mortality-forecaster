@@ -6,8 +6,9 @@ import plotly.express as px
 import pandas as pd
 import plotly.graph_objects as go 
 import os
-from prophet import Prophet
-import json
+import smtplib
+from email.message import EmailMessage
+
 
 pwd=os.getcwd()
 
@@ -38,8 +39,14 @@ fig = go.Figure()
 fig2=go.Figure()
 fig3=go.Figure()
 
-m = Prophet(interval_width=0.95, daily_seasonality=True)
-n = Prophet(interval_width=0.95, daily_seasonality=True)
+def email_list():
+    email_list=list()
+    with open(pwd+'\\..\\data\\emails.txt','r') as infile:
+        for line in infile:
+            email_list.append(line[:-1])
+            
+    return email_list
+
 
 app.layout = html.Div([
     
@@ -368,31 +375,31 @@ def prediction_cases(dropdown4,dropdown5):
 # Email callback
 
 
+
+
 @app.callback(
     Output('email-string', 'children'),
     Input('submit-val', 'n_clicks'),
     State('input-on-submit', 'value')
 )
+
+
 def email(n_clicks,value):
-    # Read JSON
-    with open(pwd+'\\..\\data\\emails.txt') as json_file:
-        email_list = json.load(json_file)
-        if (email_list==None):
-            email_list=['iannjari@gmail.com']
-        else:
-            email_list=list(email_list)
-
-
     # Validate  and save email address
-    if (value not in email_list):
-        email_list=email_list.append(value)
-        with open(pwd+'\\..\\data\\emails.txt', 'w') as outfile:
-            json.dumps(email_list, outfile)
-        string='Your email "{}" has been updated sucessfully'.format(value)
-    else:
-        string='This email has already been entered'
-    return string
+    EMAIL_ADDRESS = "iannjari@gmail.com"
+    EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
-    
+    msg = EmailMessage()
+    msg['Subject'] = "COVID-19 REPORT"
+    msg['From'] = EMAIL_ADDRESS
+    msg['To'] = value
+
+    msg.set_content(f'Here is today`s Covid report.\n'
+                    'If you did not request this mail, kindly ignore it!')
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        smtp.send_message(msg)
+        
 app.run_server(debug=True)
 
