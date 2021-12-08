@@ -38,8 +38,6 @@ app.config.suppress_callback_exceptions = True
 app.css.config.serve_locally = True
 app.scripts.config.serve_locally = True
 
-fig = go.Figure()
-fig2=go.Figure()
 fig3=go.Figure()
 
 
@@ -233,15 +231,16 @@ def display_page(pathname):
 
 @app.callback(
     Output("graph1", "figure"),
-    [Input('dropdown1', 'value'),
-    Input('dropdown6', 'value')
-     ])
+    Input('dropdown6', 'value'),
+    Input('dropdown1','value')
+        )
 
 
 def display_graph1(dropdown1,dropdown6):
     
     # Plot cases graph
     
+    fig = go.Figure()
     fig.add_trace(go.Scatter(x=cases['Date'],y=cases[dropdown1],name=dropdown1))
     fig.add_trace(go.Scatter(x=cases['Date'],y=cases[dropdown6],name=dropdown6))
     
@@ -254,6 +253,7 @@ def display_graph1(dropdown1,dropdown6):
 
 def display_graph2(dropdown2,dropdown7): 
     # Plot deaths graph
+    fig2=go.Figure()
     fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown2],mode='lines',name=dropdown2))
     fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown7],mode='lines',name=dropdown7))
     
