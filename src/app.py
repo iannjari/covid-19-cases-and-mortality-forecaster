@@ -133,7 +133,7 @@ page_1_layout = html.Div([
                 'margin-right': 'auto'}),
     dcc.Dropdown(
         id='dropdown7',
-        value = 'Afghanistan',
+        value = 'Kenya',
         options=[{'label': i, 'value': i} for i in deaths.columns[1:]],
         style={'width': '40%',
                 'margin-left': 'auto',
@@ -240,17 +240,17 @@ def display_page(pathname):
      ])
 
 
-def display_graph(dropdown1,dropdown2,dropdown6):
+def display_graph(dropdown1,dropdown2,dropdown6,dropdown7):
     
     # Plot cases graph
     
-    fig.add_trace(go.Scatter(x=cases['Date'],y=cases[dropdown1],mode='lines',name=dropdown1))
-    fig.add_trace(go.Scatter(x=cases['Date'],y=cases[dropdown6],mode='lines',name=dropdown6))
+    fig.add_trace(go.Scatter(x=cases['Date'],y=cases[dropdown1],name=dropdown1))
+    fig.add_trace(go.Scatter(x=cases['Date'],y=cases[dropdown6],name=dropdown6))
     
     
     # Plot deaths graph
-    fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown1],mode='lines',name=dropdown2))
-    fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown6],mode='lines',name=dropdown7))
+    fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown2],mode='lines',name=dropdown2))
+    fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown7],mode='lines',name=dropdown7))
     
     return fig,fig2
 
