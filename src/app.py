@@ -128,7 +128,14 @@ page_1_layout = html.Div([
         id='dropdown2',
         value = 'Afghanistan',
         options=[{'label': i, 'value': i} for i in deaths.columns[1:]],
-        style={'width': '50%',
+        style={'width': '40%',
+                'margin-left': 'auto',
+                'margin-right': 'auto'}),
+    dcc.Dropdown(
+        id='dropdown7',
+        value = 'Afghanistan',
+        options=[{'label': i, 'value': i} for i in deaths.columns[1:]],
+        style={'width': '40%',
                 'margin-left': 'auto',
                 'margin-right': 'auto'}),
     
@@ -228,7 +235,8 @@ def display_page(pathname):
     [Output("graph1", "figure"),Output("graph2","figure")],
     [Input('dropdown1', 'value'),
     Input('dropdown6', 'value'),
-    Input('dropdown2', 'value')
+    Input('dropdown2', 'value'),
+    Input('dropdown7', 'value')
      ])
 
 
@@ -239,15 +247,10 @@ def display_graph(dropdown1,dropdown2,dropdown6):
     fig.add_trace(go.Scatter(x=cases['Date'],y=cases[dropdown1],mode='lines',name=dropdown1))
     fig.add_trace(go.Scatter(x=cases['Date'],y=cases[dropdown6],mode='lines',name=dropdown6))
     
-    # Prepare deaths graphing data
-    plot_data_deaths=deaths[['Date',dropdown2]]
     
     # Plot deaths graph
-    fig2 = px.line(plot_data_deaths,x=plot_data_deaths["Date"], y=plot_data_deaths[dropdown2],
-                  hover_data={"Date"},
-                  title='Deaths By Country',
-                  labels={"y": "No. of Deaths"}
-                  )
+    fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown1],mode='lines',name=dropdown2))
+    fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown6],mode='lines',name=dropdown7))
     
     return fig,fig2
 
