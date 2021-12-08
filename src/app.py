@@ -232,27 +232,32 @@ def display_page(pathname):
     # You could also return a 404 "URL not found" page here
 
 @app.callback(
-    [Output("graph1", "figure"),Output("graph2","figure")],
+    Output("graph1", "figure"),
     [Input('dropdown1', 'value'),
-    Input('dropdown6', 'value'),
-    Input('dropdown2', 'value'),
-    Input('dropdown7', 'value')
+    Input('dropdown6', 'value')
      ])
 
 
-def display_graph(dropdown1,dropdown2,dropdown6,dropdown7):
+def display_graph1(dropdown1,dropdown6):
     
     # Plot cases graph
     
     fig.add_trace(go.Scatter(x=cases['Date'],y=cases[dropdown1],name=dropdown1))
     fig.add_trace(go.Scatter(x=cases['Date'],y=cases[dropdown6],name=dropdown6))
     
-    
+    return fig
+
+@app.callback(
+    Output("graph2","figure"),
+    [Input('dropdown2', 'value'),
+    Input('dropdown7', 'value')])
+
+def display_graph2(dropdown2,dropdown7): 
     # Plot deaths graph
     fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown2],mode='lines',name=dropdown2))
     fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown7],mode='lines',name=dropdown7))
     
-    return fig,fig2
+    return fig2
 
 @app.callback(
     Output("choropleth", "figure"),
