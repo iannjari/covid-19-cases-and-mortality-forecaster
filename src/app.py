@@ -108,7 +108,15 @@ page_1_layout = html.Div([
         id='dropdown1',
         value = 'Afghanistan',
         options=[{'label': i, 'value': i} for i in cases.columns[1:]],
-        style={'width': '50%',
+        style={'width': '40%',
+                'margin-left': 'auto',
+                'margin-right': 'auto'}),
+
+    dcc.Dropdown(
+        id='dropdown6',
+        value = 'Kenya',
+        options=[{'label': i, 'value': i} for i in cases.columns[1:]],
+        style={'width': '40%',
                 'margin-left': 'auto',
                 'margin-right': 'auto'}),
     
@@ -144,13 +152,13 @@ page_2_layout = html.Div([
     html.Br(),
     html.Br(),
     html.Br(),
-    html.P('Download the latest report on COVID-19 by clicking the button below;',style={'textAlign':'center'}),
+    html.P('Download the latest COVID-19  report by clicking the button below;',style={'textAlign':'center'}),
     html.Br(),
     html.Div(
     [html.Button("Download Report", id="btn_doc"),
     dcc.Download(id="download-doc")],style={'textAlign':'center'}),
     html.Br(),
-    html.P('To have the report automatically sent to you via email, enter your email address below then click send.',style={'textAlign':'center'}),
+    html.P('To have the report automatically sent to you via email, enter your email address below then click Submit Email.',style={'textAlign':'center'}),
     html.Div([
     html.Div(dcc.Input(id='input-on-submit', type='email',value='iannjari@gmail.com')),
     html.Button('Submit Email', id='submit-val', n_clicks=0),
@@ -219,21 +227,17 @@ def display_page(pathname):
 @app.callback(
     [Output("graph1", "figure"),Output("graph2","figure")],
     [Input('dropdown1', 'value'),
-     Input('dropdown2', 'value')
+    Input('dropdown6', 'value'),
+    Input('dropdown2', 'value')
      ])
 
 
-def display_graph(dropdown1,dropdown2):
+def display_graph(dropdown1,dropdown2,dropdown6):
     
-    # Prepare cases graphing data
-    plot_data_cases=cases[['Date',dropdown1]]
-
     # Plot cases graph
-    fig = px.line(plot_data_cases,x=plot_data_cases["Date"], y=plot_data_cases[dropdown1],
-                  hover_data={"Date"},
-                  title='Cases By Country',
-                  labels={"y": "No. of Cases"}
-                  )
+    
+    fig.add_trace(go.Scatter(x=cases['Date'],y=cases[dropdown1],mode='lines',name=dropdown1))
+    fig.add_trace(go.Scatter(x=cases['Date'],y=cases[dropdown6],mode='lines',name=dropdown6))
     
     # Prepare deaths graphing data
     plot_data_deaths=deaths[['Date',dropdown2]]
