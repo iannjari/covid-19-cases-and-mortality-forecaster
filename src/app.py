@@ -165,7 +165,7 @@ page_2_layout = html.Div([
     html.Br(),
     html.P('To have the report automatically sent to you via email, enter your email address below then click Submit Email.',style={'textAlign':'center'}),
     html.Div([
-    html.Div(dcc.Input(id='input-on-submit', type='email',value='iannjari@gmail.com')),
+    html.Div(dcc.Input(id='input-on-submit', type='email',value="")),
     html.Button('Submit Email', id='submit-val', n_clicks=0),
     html.Div(id='email-string')
     ])
@@ -392,7 +392,7 @@ def prediction_cases(dropdown4,dropdown5):
 
 
 def email(n_clicks,value):
-    while value !="":
+    if value !="":
         if n_clicks>0:
             try:
                 # Validate  and save email address
@@ -434,6 +434,9 @@ def email(n_clicks,value):
             except SMTPRecipientsRefused:
                 email_string= str("The email address you entered may not exist! Please check it again and retry.")
         else:
+            email_string=""
+    else:
+        if n_clicks>0:
             email_string=""
     return email_string   
        
