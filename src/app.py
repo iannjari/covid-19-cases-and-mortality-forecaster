@@ -7,12 +7,12 @@ import pandas as pd
 import plotly.graph_objects as go 
 import os
 import smtplib
+from smtplib import *
 from email.message import EmailMessage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
-
 pwd=os.getcwd()
 
 
@@ -392,41 +392,50 @@ def prediction_cases(dropdown4,dropdown5):
 
 
 def email(n_clicks,value):
-    if n_clicks>0:
-        # Validate  and save email address
-        EMAIL_ADDRESS = "iannjari@gmail.com"
-        EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+    while value !="":
+        if n_clicks>0:
+            try:
+                # Validate  and save email address
+                EMAIL_ADDRESS = "iannjari@gmail.com"
+                EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
-        sender_address = EMAIL_ADDRESS
-        receiver_address = value
-        mail_content = '''Hello,
-        This is a test mail.
-        Here is today's Covid report.
-        If you did not request this mail, kindly ignore it!
-        
-        Thank you!
-        '''
+                sender_address = EMAIL_ADDRESS
+                receiver_address = value
+                mail_content = '''Hello,
+                This is a test mail.
+                Here is today's Covid report.
+                If you did not request this mail, kindly ignore it!
+                
+                Thank you!
+                '''
 
-        message = MIMEMultipart()
-        message['From'] = sender_address
-        message['To'] = receiver_address
-        message['Subject'] = "COVID-19 REPORT"
-        
+                message = MIMEMultipart()
+                message['From'] = sender_address
+                message['To'] = receiver_address
+                message['Subject'] = "COVID-19 REPORT"
+                
 
-        message.attach(MIMEText(mail_content, 'plain'))
-        attach_file_name = pwd+"\\..\\data\\testpdf.pdf"
-        attach_file = open(attach_file_name, 'rb') # Open the file as binary mode
-        payload = MIMEBase('application', 'octate-stream')
-        payload.set_payload((attach_file).read())
-        encoders.encode_base64(payload) #encode the attachment
-        #add payload header with filename
-        payload.add_header('Content-Disposition', 'attachment', filename='testpdf.pdf')
-        message.attach(payload)
+                message.attach(MIMEText(mail_content, 'plain'))
+                attach_file_name = pwd+"\\..\\data\\testpdf.pdf"
+                attach_file = open(attach_file_name, 'rb') # Open the file as binary mode
+                payload = MIMEBase('application', 'octate-stream')
+                payload.set_payload((attach_file).read())
+                encoders.encode_base64(payload) #encode the attachment
+                #add payload header with filename
+                payload.add_header('Content-Disposition', 'attachment', filename='testpdf.pdf')
+                message.attach(payload)
 
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-            smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-            smtp.send_message(message)
+                with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+                    smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+                    smtp.send_message(message)
 
+                email_string="An email with the report has been sent and your email address saved to our list."
+
+            except SMTPRecipientsRefused:
+                email_string= str("The email address you entered may not exist! Please check it again and retry.")
+        else:
+            email_string=""
+    return email_string   
        
 app.run_server(debug=True)
 
