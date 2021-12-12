@@ -392,6 +392,7 @@ def prediction_cases(dropdown4,dropdown5):
 
 
 def email(n_clicks,value):
+    email_string=""
     if value !="":
         if n_clicks>0:
             try:
