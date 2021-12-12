@@ -31,6 +31,8 @@ death_preds=pd.read_csv(pwd+"\\..\\data\\deathpredictions.csv")
 deaths=pd.read_excel(pwd+"\\..\\data\\deaths_plot.xlsx")
 
 
+
+
 # GLOBAL VARIABLES DECLARATION
 
 app = dash.Dash(__name__)
@@ -392,6 +394,7 @@ def prediction_cases(dropdown4,dropdown5):
 
 
 def email(n_clicks,value):
+    email_list=pd.read_csv(pwd+'\\..\\data\\emaillist.csv')
     email_string=""
     if value !="":
         if n_clicks>0:
@@ -431,6 +434,11 @@ def email(n_clicks,value):
                     smtp.send_message(message)
 
                 email_string="An email with the report has been sent and your email address saved to our list."
+                if value not in email_list['Address']:
+                    address = pd.Series(value)
+                    email_list.append(address, ignore_index = True)
+                    email_list.to_csv(pwd+'\\..\\data\\emaillist.csv')
+
 
             except SMTPRecipientsRefused:
                 email_string= str("The email address you entered may not exist! Please check it again and retry.")
