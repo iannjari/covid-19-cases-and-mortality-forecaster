@@ -244,11 +244,12 @@ page_3_layout = html.Div([
 
 page_4_layout=html.Div(
     [html.Br(),
-    html.H1('Kenya Vaccinations by County and Region'),
+    html.H1('Kenya Vaccinations by County and Region',style={'textAlign':'center'}),
     html.Br(),
     html.Br(),
-    dcc.RadioItems(id='radio-button',options=[{'label': 'County', 'value': 'c'},
-                                        {'label': 'Region', 'value': 'r'}],
+    dcc.RadioItems(id='radio-button',options=[{'label': 'Region', 'value': 'r'},
+                                              {'label': 'County', 'value': 'c'}
+                                        ],
                                         value='r'),
     html.Br(),
     html.Br(),
