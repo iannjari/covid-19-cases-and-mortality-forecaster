@@ -30,8 +30,8 @@ cases=pd.read_excel(pwd+"\\..\\data\\cases_plot.xlsx")
 death_preds=pd.read_csv(pwd+"\\..\\data\\deathpredictions.csv")
 deaths=pd.read_excel(pwd+"\\..\\data\\deaths_plot.xlsx")
 
-
-
+# Read Vaccinations data
+vaccines=pd.read_csv(pwd+'\\..\\data\\vaccinations.csv')
 
 # GLOBAL VARIABLES DECLARATION
 
@@ -99,7 +99,8 @@ page_1_layout = html.Div([
     dcc.Link('Download Report', href='/page-2'),
     html.Br(),
     dcc.Link('Predict', href='/page-3'),
-    
+    html.Br(),
+    dcc.Link('Kenya Vaccinations by County/Region', href='/page-4'),
     html.Br(),
     html.Br(),
     
@@ -215,6 +216,18 @@ page_3_layout = html.Div([
     style={'width': '50%', 'display': 'inline-block'})
 ])
 
+page_4_layout=html.Div(
+    [html.Br(),
+    html.H1('Kenya Vaccinations by County and Region'),
+    html.Br(),
+    html.Br(),
+    dcc.RadioItems(id='radio-button',options=[{'label': 'County', 'value': 'c'},
+                                        {'label': 'Region', 'value': 'r'}],
+                                        value='r'),
+    html.Br(),
+    html.Br(),
+    dcc.Graph(id='vaccines-graph')
+    ])
 
 
 # Update the pages index
@@ -227,6 +240,8 @@ def display_page(pathname):
         return page_2_layout
     elif pathname == '/page-3':
         return page_3_layout
+    elif pathname=='/page-4':
+        return page_4_layout
     else:
         return index_page
     # You could also return a 404 "URL not found" page here
@@ -382,10 +397,6 @@ def prediction_cases(dropdown4,dropdown5):
 
 
 # Email callback
-
-
-
-
 @app.callback(
     Output('email-string', 'children'),
     Input('submit-val', 'n_clicks'),
@@ -447,7 +458,29 @@ def email(n_clicks,value):
     else:
         if n_clicks>0:
             email_string=""
-    return email_string   
-       
+    return email_string  
+
+# Vaccinations callback
+@app.callback(
+    Output('vaccines-graph','figure'),
+    Input('radio-button','value')
+)
+
+def vaccinations(value):
+    if value =='c':
+        fig9 = go.Figure(go.Bar(
+            y=vaccines['County'].values[::-1],
+            x=vaccines['Vaccinations'].values[::-1],
+            orientation='h'))
+
+    else:
+        df=vaccines.groupby(['Region']).sum()
+        df=df.reset_index()
+        fig9=go.Figure(go.Bar(
+            y=df['Region'].values[::-1],
+            x=vaccines['Vaccinations'].values[::-1],
+            orientation='h'))
+        
+    return fig9
 app.run_server(debug=True)
 
