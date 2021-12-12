@@ -163,7 +163,7 @@ page_1_layout = html.Div([
 page_2_layout = html.Div([
     html.Br(),
     html.Br(),
-    html.H1('Report',style={'textAlign':'center'}),
+    html.H1('Download or Mail Report',style={'textAlign':'center'}),
     dcc.Link('Global Caseload and Mortality', href='/'),
     html.Br(),
     html.Br(),
@@ -183,9 +183,10 @@ page_2_layout = html.Div([
     html.Br(),
     html.P('To have the report automatically sent to you via email, enter your email address below then click Submit Email.',style={'textAlign':'center'}),
     html.Div([
-    html.Div(dcc.Input(id='input-on-submit', type='email',value="")),
+    html.Div(dcc.Input(id='input-on-submit', type='email',value=""),style={'textAlign':'center'}),
     html.Br(),
-    html.Button('Submit Email', id='submit-val', n_clicks=0),
+    html.Div(
+    html.Button('Submit Email', id='submit-val', n_clicks=0),style={'textAlign':'center'}),
     html.Br(),
     html.Div(id='email-string')
     ])
@@ -197,12 +198,18 @@ page_3_layout = html.Div([
         style={'textAlign':'center'}),
     html.Br(),
     
-    dcc.Link('Home', href='/index_page'),
+    dcc.Link('Global Caseload and Mortality by Country', href='/index_page'),
+    html.Br(),
+    html.Br(),
+    dcc.Link('Compare Cases and Deaths by Country', href='/page-1'),
+    html.Br(),
     html.Br(),
     dcc.Link('Download Report', href='/page-2'),
     html.Br(),
-    dcc.Link('Cases and Deaths by Country', href='/page-1'),
-    
+    html.Br(),
+    dcc.Link('Kenya Vaccinations by County/Region', href='/page-4'),
+    html.Br(),
+    html.Br(),
     html.Br(),
     html.Br(),
     
