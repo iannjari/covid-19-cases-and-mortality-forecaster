@@ -56,12 +56,17 @@ index_page = html.Div([
     html.Br(),
     dcc.Link('Cases and Deaths By Country', href='/page-1'),
     html.Br(),
+    html.Br(),
     dcc.Link('Download Report', href='/page-2'),
     html.Br(),
-    dcc.Link('Predict', href='/page-3'),
+    html.Br(),
+    dcc.Link('Predictions', href='/page-3'),
     html.Br(),
     html.Br(),
-    
+    dcc.Link('Kenya Vaccinations by County/Region', href='/page-4'),
+    html.Br(),
+    html.Br(),
+
      dcc.Dropdown(
         id='dropdown3',
         value = 'Cases',
@@ -72,7 +77,8 @@ index_page = html.Div([
             'width':'50%',
             'margin-left': 'auto',
             'margin-right': 'auto'
-            }
+            },
+            clearable=False
             ),
      
     html.Br(),
@@ -94,11 +100,14 @@ page_1_layout = html.Div([
         style={'textAlign':'center'}),
     html.Br(),
     
-    dcc.Link('Home', href='/index_page'),
+    dcc.Link('Global Caseload and Mortality by Country', href='/index_page'),
+    html.Br(),
     html.Br(),
     dcc.Link('Download Report', href='/page-2'),
     html.Br(),
-    dcc.Link('Predict', href='/page-3'),
+    html.Br(),
+    dcc.Link('Predictions', href='/page-3'),
+    html.Br(),
     html.Br(),
     dcc.Link('Kenya Vaccinations by County/Region', href='/page-4'),
     html.Br(),
@@ -111,7 +120,8 @@ page_1_layout = html.Div([
         options=[{'label': i, 'value': i} for i in cases.columns[1:]],
         style={'width': '40%',
                 'margin-left': 'auto',
-                'margin-right': 'auto'}),
+                'margin-right': 'auto'},
+        clearable=False),
 
     dcc.Dropdown(
         id='dropdown6',
@@ -119,7 +129,8 @@ page_1_layout = html.Div([
         options=[{'label': i, 'value': i} for i in cases.columns[1:]],
         style={'width': '40%',
                 'margin-left': 'auto',
-                'margin-right': 'auto'}),
+                'margin-right': 'auto'},
+        clearable=False),
     
     dcc.Graph(id='graph1'),
      html.Div(id='dd-output-container1'),],
@@ -131,14 +142,16 @@ page_1_layout = html.Div([
         options=[{'label': i, 'value': i} for i in deaths.columns[1:]],
         style={'width': '40%',
                 'margin-left': 'auto',
-                'margin-right': 'auto'}),
+                'margin-right': 'auto'},
+        clearable=False),
     dcc.Dropdown(
         id='dropdown7',
         value = 'Kenya',
         options=[{'label': i, 'value': i} for i in deaths.columns[1:]],
         style={'width': '40%',
                 'margin-left': 'auto',
-                'margin-right': 'auto'}),
+                'margin-right': 'auto'},
+        clearable=False),
     
     dcc.Graph(id='graph2'),
     
@@ -149,16 +162,18 @@ page_1_layout = html.Div([
 
 page_2_layout = html.Div([
     html.Br(),
-    html.Div(id='page-2-content'),
     html.Br(),
     html.H1('Report',style={'textAlign':'center'}),
-    dcc.Link('Home', href='/'),
+    dcc.Link('Global Caseload and Mortality', href='/'),
+    html.Br(),
     html.Br(),
     dcc.Link('Cases and Deaths By Country', href='/page-1'),
     html.Br(),
-    dcc.Link('Predict', href='/page-3'),
+    html.Br(),
+    dcc.Link('Predictions', href='/page-3'),
     html.Br(),
     html.Br(),
+    dcc.Link('Kenya Vaccinations by County/Region', href='/page-4'),
     html.Br(),
     html.P('Download the latest COVID-19  report by clicking the button below;',style={'textAlign':'center'}),
     html.Br(),
@@ -169,7 +184,9 @@ page_2_layout = html.Div([
     html.P('To have the report automatically sent to you via email, enter your email address below then click Submit Email.',style={'textAlign':'center'}),
     html.Div([
     html.Div(dcc.Input(id='input-on-submit', type='email',value="")),
+    html.Br(),
     html.Button('Submit Email', id='submit-val', n_clicks=0),
+    html.Br(),
     html.Div(id='email-string')
     ])
 ])
