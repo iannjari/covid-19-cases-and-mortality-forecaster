@@ -120,7 +120,8 @@ page_1_layout = html.Div([
         options=[{'label': i, 'value': i} for i in cases.columns[1:]],
         style={'width': '40%',
                 'margin-left': 'auto',
-                'margin-right': 'auto'},
+                'margin-right': 'auto',
+                'bottom': '2px'},
         clearable=False),
 
     dcc.Dropdown(
@@ -142,7 +143,8 @@ page_1_layout = html.Div([
         options=[{'label': i, 'value': i} for i in deaths.columns[1:]],
         style={'width': '40%',
                 'margin-left': 'auto',
-                'margin-right': 'auto'},
+                'margin-right': 'auto',
+                'bottom': '2px'},
         clearable=False),
     dcc.Dropdown(
         id='dropdown7',
