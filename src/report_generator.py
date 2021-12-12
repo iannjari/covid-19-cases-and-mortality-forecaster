@@ -13,7 +13,13 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 from fpdf import FPDF
 from datetime import date
-
+import smtplib
+from smtplib import *
+from email.message import EmailMessage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
 
 pwd=os.getcwd()
 
@@ -281,10 +287,50 @@ def generate_reports(heading1,figure1,line1,heading2,figure2,line2,line3,line4):
     pdf.ln()
     pdf.cell(1,1,line4)
 
+def send_mail():
+    email_list=pd.read_csv(pwd+'\\..\\data\\emaillist.csv')
+    EMAIL_ADDRESS = "iannjari@gmail.com"
+    EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+    for address in email_list['Address']:
+        
+        sender_address = EMAIL_ADDRESS
+        receiver_address = address
+        mail_content = '''Hello,
+                This is a test mail.
+                Here is today's Covid report.
+                If you did not request this mail, kindly ignore it!
+                
+                Thank you!
+                '''
+
+        message = MIMEMultipart()
+        message['From'] = sender_address
+        message['To'] = receiver_address
+        message['Subject'] = "COVID-19 REPORT"
+                
+
+        message.attach(MIMEText(mail_content, 'plain'))
+        attach_file_name = pwd+"\\..\\data\\testpdf.pdf"
+        attach_file = open(attach_file_name, 'rb') # Open the file as binary mode
+        payload = MIMEBase('application', 'octate-stream')
+        payload.set_payload((attach_file).read())
+        encoders.encode_base64(payload) #encode the attachment
+        #add payload header with filename
+        payload.add_header('Content-Disposition', 'attachment', filename='testpdf.pdf')
+        message.attach(payload)
+
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+            smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+            smtp.send_message(message)
+
+
+
 generate_reports(heading11,figure11,line11,heading12,figure12,line12,emptyline,emptyline)
 generate_reports(heading21,figure21,line21,heading22,figure22,line22,emptyline,emptyline)
 generate_reports(heading31,figure31,line31,heading32,figure32,line32,line33,line34)
 
-pdf.output('testpdf.pdf', 'F')
+pdf.output(pwd+'\\..\\data\\testpdf.pdf', 'F')
+
+send_mail()
 
 
