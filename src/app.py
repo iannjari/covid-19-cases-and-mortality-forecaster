@@ -50,20 +50,19 @@ app.layout = html.Div([
     ])
 
 index_page = html.Div([
-    #dcc.Link('Home', href='/page-1'),
     html.H1('Global Caseload and Mortality by Country',
             style={'textAlign':'center'}),
     html.Br(),
-    dcc.Link('Cases and Deaths By Country', href='/page-1'),
+    dcc.Link('Cases and Deaths By Country', href='/compare'),
     html.Br(),
     html.Br(),
-    dcc.Link('Download Report', href='/page-2'),
+    dcc.Link('Download Report', href='/report'),
     html.Br(),
     html.Br(),
-    dcc.Link('Predictions', href='/page-3'),
+    dcc.Link('Predictions', href='/predict'),
     html.Br(),
     html.Br(),
-    dcc.Link('Kenya Vaccinations by County/Region', href='/page-4'),
+    dcc.Link('Kenya Vaccinations by County/Region', href='/vaccines'),
     html.Br(),
     html.Br(),
 
@@ -103,13 +102,13 @@ page_1_layout = html.Div([
     dcc.Link('Global Caseload and Mortality by Country', href='/index_page'),
     html.Br(),
     html.Br(),
-    dcc.Link('Download Report', href='/page-2'),
+    dcc.Link('Download Report', href='/report'),
     html.Br(),
     html.Br(),
-    dcc.Link('Predictions', href='/page-3'),
+    dcc.Link('Predictions', href='/predict'),
     html.Br(),
     html.Br(),
-    dcc.Link('Kenya Vaccinations by County/Region', href='/page-4'),
+    dcc.Link('Kenya Vaccinations by County/Region', href='/vaccines'),
     html.Br(),
     html.Br(),
     
@@ -169,13 +168,13 @@ page_2_layout = html.Div([
     dcc.Link('Global Caseload and Mortality', href='/'),
     html.Br(),
     html.Br(),
-    dcc.Link('Cases and Deaths By Country', href='/page-1'),
+    dcc.Link('Cases and Deaths By Country', href='/compare'),
     html.Br(),
     html.Br(),
-    dcc.Link('Predictions', href='/page-3'),
+    dcc.Link('Predictions', href='/predict'),
     html.Br(),
     html.Br(),
-    dcc.Link('Kenya Vaccinations by County/Region', href='/page-4'),
+    dcc.Link('Kenya Vaccinations by County/Region', href='/vaccines'),
     html.Br(),
     html.P('Download the latest COVID-19  report by clicking the button below;',style={'textAlign':'center'}),
     html.Br(),
@@ -203,13 +202,13 @@ page_3_layout = html.Div([
     dcc.Link('Global Caseload and Mortality by Country', href='/index_page'),
     html.Br(),
     html.Br(),
-    dcc.Link('Compare Cases and Deaths by Country', href='/page-1'),
+    dcc.Link('Compare Cases and Deaths by Country', href='/compare'),
     html.Br(),
     html.Br(),
-    dcc.Link('Download Report', href='/page-2'),
+    dcc.Link('Download Report', href='/report'),
     html.Br(),
     html.Br(),
-    dcc.Link('Kenya Vaccinations by County/Region', href='/page-4'),
+    dcc.Link('Kenya Vaccinations by County/Region', href='/vaccines'),
     html.Br(),
     html.Br(),
     html.Br(),
@@ -250,13 +249,13 @@ page_4_layout=html.Div(
     dcc.Link('Global Caseload and Mortality by Country', href='/index_page'),
     html.Br(),
     html.Br(),
-    dcc.Link('Compare Cases and Deaths by Country', href='/page-1'),
+    dcc.Link('Compare Cases and Deaths by Country', href='/compare'),
     html.Br(),
     html.Br(),
-    dcc.Link('Download Report', href='/page-2'),
+    dcc.Link('Download Report', href='/report'),
     html.Br(),
     html.Br(),
-    dcc.Link('Predictions', href='/page-3'),
+    dcc.Link('Predictions', href='/predict'),
     html.Br(),
     html.Br(),
     dcc.RadioItems(id='radio-button',options=[{'label': 'Region', 'value': 'r'},
@@ -273,13 +272,13 @@ page_4_layout=html.Div(
 @app.callback(dash.dependencies.Output('page-content', 'children'),
               [dash.dependencies.Input('url', 'pathname')])
 def display_page(pathname):
-    if pathname == '/page-1':
+    if pathname == '/compare':
         return page_1_layout
-    elif pathname == '/page-2':
+    elif pathname == '/report':
         return page_2_layout
-    elif pathname == '/page-3':
+    elif pathname == '/predict':
         return page_3_layout
-    elif pathname=='/page-4':
+    elif pathname=='/vaccines':
         return page_4_layout
     else:
         return index_page
@@ -456,7 +455,7 @@ def email(n_clicks,value):
                 sender_address = EMAIL_ADDRESS
                 receiver_address = value
                 mail_content = '''Hello,
-                
+
 Here is today's Covid report.
 If you did not request this mail, kindly ignore it!
                 
