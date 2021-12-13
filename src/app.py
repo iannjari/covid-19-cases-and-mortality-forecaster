@@ -480,6 +480,15 @@ def email(n_clicks,value):
 
             except SMTPRecipientsRefused:
                 email_string= str("The email address you entered may not exist! Please check it again and retry.")
+            except SMTPServerDisconnected:
+                email_string=str('The server unexpectedly disconnected, or an attempt \n'
+                 'was made to use the SMTP instance before connecting it to a server. Try again later')
+            except SMTPSenderRefused:
+                email_string='Sender address refused.'
+            except SMTPConnectError:
+                email_string='An error occurred during establishment of a connection with the server.'
+            except SMTPAuthenticationError:
+                email_string='An Authentication Error occured'
         else:
             email_string=""
     else:
