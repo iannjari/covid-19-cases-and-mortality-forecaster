@@ -296,11 +296,12 @@ def send_mail():
         sender_address = EMAIL_ADDRESS
         receiver_address = address
         mail_content = '''Hello,
-                This is a test mail.
-                Here is today's Covid report.
-                If you did not request this mail, kindly ignore it!
                 
-                Thank you!
+This is a test mail.
+Here is today's Covid report.
+If you did not request this mail, kindly ignore it!
+                
+Thank you!
                 '''
 
         message = MIMEMultipart()
