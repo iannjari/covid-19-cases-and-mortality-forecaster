@@ -124,7 +124,7 @@ def create_figures(trend_c,trend_d,grouped_cases,grouped_deaths):
     plt.ylabel("Daily New Cases", size=14)
     plt.grid()
     # save image as PNG file
-    plt.savefig("fig3.png",
+    plt.savefig(pwd+"\\..\\data\\fig3.png",
                         format='png',
                         dpi=150)
     
@@ -136,7 +136,7 @@ def create_figures(trend_c,trend_d,grouped_cases,grouped_deaths):
     plt.ylabel("Global Deaths", size=14)
     plt.grid()
     # save image as PNG file
-    plt.savefig("fig4.png",
+    plt.savefig(pwd+"\\..\\data\\fig4.png",
                 format='png',
                 dpi=150)
     
@@ -154,10 +154,10 @@ def create_figures(trend_c,trend_d,grouped_cases,grouped_deaths):
     # Using `hole` to create a donut-like pie chart
     fig6 = go.Figure(data=[go.Pie(labels=labels_d, values=values_d, hole=.3)])
 
-    fig1.write_image("fig1.png")
-    fig2.write_image("fig2.png")
-    fig5.write_image("fig5.png")
-    fig6.write_image("fig6.png")
+    fig1.write_image(pwd+"\\..\\data\\fig1.png")
+    fig2.write_image(pwd+"\\..\\data\\fig2.png")
+    fig5.write_image(pwd+"\\..\\data\\fig5.png")
+    fig6.write_image(pwd+"\\..\\data\\fig6.png")
 
 # Function to group data by region
 def regions_group(case_map,death_map):
@@ -233,26 +233,26 @@ pdf = FPDF('P', 'mm', (210,296))
 emptyline=''
 
 heading11='Total Cases By Country Globally'
-figure11="fig1.png"
+figure11=pwd+"\\..\\data\\fig1.png"
 line11=f'Total cases recorded globally have now reached {pg2_cases}'
 heading12='Total By Country Deaths Globally'
-figure12="fig2.png"
+figure12=pwd+"\\..\\data\\fig2.png"
 line12=f'Total deaths recorded globally have now reached {pg2_deaths}'
 
 heading31='Composition of Cases by Region'
-figure31="fig5.png"
+figure31=pwd+"\\..\\data\\fig5.png"
 line31=f'Deaths in Africa are {pg3_africa_case}, Europe {pg3_europe_case}, Asia {pg3_asia_case}, Australia and Oceania {pg3_au_case}'
 line33=f'North America {pg3_na_case} and South America {pg3_sa_case} '
 heading32='Composition of Deaths by Region'
-figure32="fig6.png"
+figure32=pwd+"\\..\\data\\fig6.png"
 line32=f'Deaths in Africa are {pg3_africa_death}, Europe {pg3_europe_death}, Asia {pg3_asia_death}, Australia and Oceania {pg3_au_death}'
 line34=f'North America {pg3_na_death} and South America {pg3_sa_death} '
 
 heading21='Total New Cases For Last 2 Weeks Globally'
-figure21="fig3.png"
+figure21=pwd+"\\..\\data\\fig3.png"
 line21=f'Total Global Cases have increased {pg4_cases_per}% from {pg4_cases1} to {pg4_cases2} in the last two weeks'
 heading22='Total New Deaths For Last 2 Weeks Globally'
-figure22="fig4.png"
+figure22=pwd+"\\..\\data\\fig4.png"
 line22=f'Total Global Deaths have increased {pg4_deaths_per}% from {pg4_deaths1} to {pg4_deaths2} in the last two weeks'
 
 
@@ -310,13 +310,13 @@ def send_mail():
                 
 
         message.attach(MIMEText(mail_content, 'plain'))
-        attach_file_name = pwd+"\\..\\data\\testpdf.pdf"
+        attach_file_name = pwd+"\\..\\data\\report.pdf"
         attach_file = open(attach_file_name, 'rb') # Open the file as binary mode
         payload = MIMEBase('application', 'octate-stream')
         payload.set_payload((attach_file).read())
         encoders.encode_base64(payload) #encode the attachment
         #add payload header with filename
-        payload.add_header('Content-Disposition', 'attachment', filename='testpdf.pdf')
+        payload.add_header('Content-Disposition', 'attachment', filename='report.pdf')
         message.attach(payload)
 
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
@@ -329,7 +329,7 @@ generate_reports(heading11,figure11,line11,heading12,figure12,line12,emptyline,e
 generate_reports(heading21,figure21,line21,heading22,figure22,line22,emptyline,emptyline)
 generate_reports(heading31,figure31,line31,heading32,figure32,line32,line33,line34)
 
-pdf.output(pwd+'\\..\\data\\testpdf.pdf', 'F')
+pdf.output(pwd+'\\..\\data\\report.pdf', 'F')
 
 send_mail()
 
