@@ -299,6 +299,7 @@ def display_graph1(dropdown1,dropdown6):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=cases['Date'],y=cases[dropdown1],name=dropdown1))
     fig.add_trace(go.Scatter(x=cases['Date'],y=cases[dropdown6],name=dropdown6))
+    fig.update_layout( title="Caseload", xaxis_title="Dates", yaxis_title="Cases")
     
     return fig
 
@@ -312,6 +313,7 @@ def display_graph2(dropdown2,dropdown7):
     fig2=go.Figure()
     fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown2],mode='lines',name=dropdown2))
     fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown7],mode='lines',name=dropdown7))
+    fig2.update_layout( title="Mortality", xaxis_title="Dates", yaxis_title="Deaths")
     
     return fig2
 
