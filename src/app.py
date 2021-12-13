@@ -190,7 +190,7 @@ page_2_layout = html.Div([
     html.Div(
     html.Button('Submit Email', id='submit-val', n_clicks=0),style={'textAlign':'center'}),
     html.Br(),
-    html.Div(id='email-string')
+    html.Div(id='email-string',style={'textAlign':'center'})
     ])
 ])
 
@@ -394,9 +394,7 @@ def display_map(dropdown3):
     prevent_initial_call=True,
 )
 def download_doc(n_clicks):
-    return dcc.send_file(
-        "testpdf.pdf"
-    )
+    return dcc.send_file(pwd+"\\..\\data\\report.pdf")
 
 
 # Callback for predictions
@@ -458,12 +456,12 @@ def email(n_clicks,value):
                 sender_address = EMAIL_ADDRESS
                 receiver_address = value
                 mail_content = '''Hello,
-                This is a test mail.
-                Here is today's Covid report.
-                If you did not request this mail, kindly ignore it!
                 
-                Thank you!
-                '''
+Here is today's Covid report.
+If you did not request this mail, kindly ignore it!
+                
+Thank you!
+            '''
 
                 message = MIMEMultipart()
                 message['From'] = sender_address
@@ -472,13 +470,13 @@ def email(n_clicks,value):
                 
 
                 message.attach(MIMEText(mail_content, 'plain'))
-                attach_file_name = pwd+"\\..\\data\\testpdf.pdf"
+                attach_file_name = pwd+"\\..\\data\\report.pdf"
                 attach_file = open(attach_file_name, 'rb') # Open the file as binary mode
                 payload = MIMEBase('application', 'octate-stream')
                 payload.set_payload((attach_file).read())
                 encoders.encode_base64(payload) #encode the attachment
                 #add payload header with filename
-                payload.add_header('Content-Disposition', 'attachment', filename='testpdf.pdf')
+                payload.add_header('Content-Disposition', 'attachment', filename='report.pdf')
                 message.attach(payload)
 
                 with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
@@ -507,7 +505,7 @@ def email(n_clicks,value):
             email_string=""
     else:
         if n_clicks>0:
-            email_string=""
+            email_string="Please enter an address!"
     return email_string  
 
 # Vaccinations callback
