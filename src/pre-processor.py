@@ -48,7 +48,6 @@ casemapdata = df5.rename(columns={df5.columns[1]: 'Total Cases'})
 casemapdata.to_excel (pwd+"\\..\\data\\casemapdata.xlsx", index = False, header=True)
 
 # Prepare deaths data for the map
-
 df6=deaths.drop('Province/State',axis=1)
 df6=df6.groupby(['Country/Region'],as_index=False).sum()
 df6=df6.drop(['Lat','Long'],axis=1)
