@@ -310,8 +310,8 @@ def display_graph1(dropdown1,dropdown6):
 def display_graph2(dropdown2,dropdown7): 
     # Plot deaths graph
     fig2=go.Figure()
-    fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown2],mode='lines',name=dropdown2))
-    fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown7],mode='lines',name=dropdown7))
+    fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown2],mode='lines',name=dropdown2,line=dict(color='#00ff7f')))
+    fig2.add_trace(go.Scatter(x=deaths['Date'],y=deaths[dropdown7],mode='lines',name=dropdown7,line=dict(color='#800080')))
     fig2.update_layout( title="Mortality", xaxis_title="Dates", yaxis_title="Deaths")
     
     return fig2
