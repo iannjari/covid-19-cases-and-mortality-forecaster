@@ -446,7 +446,6 @@ def prediction_cases(dropdown4,dropdown5):
 
 
 def email(n_clicks,value):
-    email_list=pd.read_csv(pwd+'\\..\\data\\emaillist.csv')
     email_string=""
     if value !="":
         regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -492,9 +491,13 @@ Thank you!
                         smtp.send_message(message)
 
                     email_string="An email with the report has been sent and your email address saved to our list."
-                    if value not in email_list['Address']:
-                        address = pd.Series(value)
-                        email_list.append(address, ignore_index = True)
+                    email_list=pd.read_csv(pwd+'\\..\\data\\emaillist.csv')
+                    email_list=email_list['Address']
+                    if value not in email_list:
+                        value=pd.Series(value)
+                        email_list=email_list.append(value, ignore_index = True)
+                        email_list=pd.DataFrame(email_list)
+                        email_list=email_list.rename(columns={0:'Address'})
                         email_list.to_csv(pwd+'\\..\\data\\emaillist.csv')
 
 
