@@ -14,6 +14,8 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 import re
+import DNS
+from validate_email import validate_email
 pwd=os.getcwd()
 
 
@@ -449,9 +451,9 @@ def email(n_clicks,value):
     if value !="":
         regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
  
-        # pass the regular expression
-        # and the string into the fullmatch() method
-        if(re.fullmatch(regex, value)):
+        # pass the regular expression and the string into the fullmatch() method
+        # check whether the email exists
+        if(re.fullmatch(regex, value)) and validate_email(value,verify=True):
  
             if n_clicks>0:
                 try:
