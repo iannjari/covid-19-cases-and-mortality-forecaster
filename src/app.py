@@ -13,6 +13,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
+import re
 pwd=os.getcwd()
 
 
@@ -446,62 +447,71 @@ def email(n_clicks,value):
     email_list=pd.read_csv(pwd+'\\..\\data\\emaillist.csv')
     email_string=""
     if value !="":
-        if n_clicks>0:
-            try:
-                # Validate  and save email address
-                EMAIL_ADDRESS = "iannjari@gmail.com"
-                EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+        regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+ 
+        # pass the regular expression
+        # and the string into the fullmatch() method
+        if(re.fullmatch(regex, value)):
+ 
+            if n_clicks>0:
+                try:
+                    # Validate  and save email address
+                    EMAIL_ADDRESS = "iannjari@gmail.com"
+                    EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
-                sender_address = EMAIL_ADDRESS
-                receiver_address = value
-                mail_content = '''Hello,
+                    sender_address = EMAIL_ADDRESS
+                    receiver_address = value
+                    mail_content = '''Hello,
 
 Here is today's Covid report.
 If you did not request this mail, kindly ignore it!
-                
+                        
 Thank you!
-            '''
+                    '''
 
-                message = MIMEMultipart()
-                message['From'] = sender_address
-                message['To'] = receiver_address
-                message['Subject'] = "COVID-19 REPORT"
-                
+                    message = MIMEMultipart()
+                    message['From'] = sender_address
+                    message['To'] = receiver_address
+                    message['Subject'] = "COVID-19 REPORT"
+                        
 
-                message.attach(MIMEText(mail_content, 'plain'))
-                attach_file_name = pwd+"\\..\\data\\report.pdf"
-                attach_file = open(attach_file_name, 'rb') # Open the file as binary mode
-                payload = MIMEBase('application', 'octate-stream')
-                payload.set_payload((attach_file).read())
-                encoders.encode_base64(payload) #encode the attachment
-                #add payload header with filename
-                payload.add_header('Content-Disposition', 'attachment', filename='report.pdf')
-                message.attach(payload)
+                    message.attach(MIMEText(mail_content, 'plain'))
+                    attach_file_name = pwd+"\\..\\data\\report.pdf"
+                    attach_file = open(attach_file_name, 'rb') # Open the file as binary mode
+                    payload = MIMEBase('application', 'octate-stream')
+                    payload.set_payload((attach_file).read())
+                    encoders.encode_base64(payload) #encode the attachment
+                    #add payload header with filename
+                    payload.add_header('Content-Disposition', 'attachment', filename='report.pdf')
+                    message.attach(payload)
 
-                with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-                    smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-                    smtp.send_message(message)
+                    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+                        smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+                        smtp.send_message(message)
 
-                email_string="An email with the report has been sent and your email address saved to our list."
-                if value not in email_list['Address']:
-                    address = pd.Series(value)
-                    email_list.append(address, ignore_index = True)
-                    email_list.to_csv(pwd+'\\..\\data\\emaillist.csv')
+                    email_string="An email with the report has been sent and your email address saved to our list."
+                    if value not in email_list['Address']:
+                        address = pd.Series(value)
+                        email_list.append(address, ignore_index = True)
+                        email_list.to_csv(pwd+'\\..\\data\\emaillist.csv')
 
 
-            except SMTPRecipientsRefused:
-                email_string= str("The email address you entered may not exist! Please check it again and retry.")
-            except SMTPServerDisconnected:
-                email_string=str('The server unexpectedly disconnected, or an attempt \n'
-                 'was made to use the SMTP instance before connecting it to a server. Try again later')
-            except SMTPSenderRefused:
-                email_string='Sender address refused.'
-            except SMTPConnectError:
-                email_string='An error occurred during establishment of a connection with the server.'
-            except SMTPAuthenticationError:
-                email_string='An Authentication Error occured'
+                except SMTPRecipientsRefused:
+                    email_string= str("The email address you entered may not exist! Please check it again and retry.")
+                except SMTPServerDisconnected:
+                    email_string=str('The server unexpectedly disconnected, or an attempt \n'
+                    'was made to use the SMTP instance before connecting it to a server. Try again later')
+                except SMTPSenderRefused:
+                    email_string='Sender address refused.'
+                except SMTPConnectError:
+                    email_string='An error occurred during establishment of a connection with the server.'
+                except SMTPAuthenticationError:
+                    email_string='An Authentication Error occured'
+            else:
+                email_string=""
         else:
-            email_string=""
+            email_string="Invalid Email. Check whether you have typed the address correctly."
+        
     else:
         if n_clicks>0:
             email_string="Please enter an address!"
