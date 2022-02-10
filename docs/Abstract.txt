@@ -1,0 +1,21 @@
+
+PROJECT TITLE: COVID-19 CASELOAD AND MORTALITY ANALYSIS AND PREDICTION WITH MACHINE LEARNING
+
+A micro-service data-driven web-application that;
+
+	is open-source solution which is easy to deploy and use, 
+	has an interactive dashboard app tracking the number of cases and deaths
+	by country,
+
+	predicts the cases for the next 14 days in a country /region selected by the user, 
+
+	incorporates a report generation engine that shows the state of the pandemic worldwide,
+
+	shows the state of vaccinations in Kenya by County and Region.
+
+The objectives of the project were to;
+•	Analyze the state of tracking applications and availability of open-source code for their implementation,
+•	Design an open-source solution which is easy to deploy and use,
+•	Create an interactive dashboard app tracking the number of cases and deaths by country and region,
+•	Build a machine learning model, implemented in Python, that predicts the cases for the next 14 days in a country /region selected by the user,
+•	Create a daily report generation engine that shows the state of vaccinations worldwide.
