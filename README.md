@@ -1,5 +1,5 @@
-# COVID-19-Cases-and-Mortality-Analysis-and-Prediction
-This is a fourth year project which is partial fulfillment of requirements for a of a Bachelor’s 
+# COVID-19 caseload and mortality analysis and prediction
+Final year project which is partial fulfillment of requirements for a of a Bachelor’s 
 of Science (Computer Science) at Kenyatta University. 
 
 ![Forecast Image](forecast.png)
